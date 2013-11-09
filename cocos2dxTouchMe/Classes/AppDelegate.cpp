@@ -1,11 +1,3 @@
-//
-//  cocos2dxTouchMeAppDelegate.cpp
-//  cocos2dxTouchMe
-//
-//  Created by FUJITA YASUO on 2013/11/09.
-//  Copyright __MyCompanyName__ 2013年. All rights reserved.
-//
-
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
@@ -17,7 +9,6 @@ using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
-
 }
 
 AppDelegate::~AppDelegate()
@@ -28,6 +19,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
+    CCEGLView *pEGLView = CCEGLView::sharedOpenGLView();
+
+	//画面サイズを取得するためにCCEGLViewを作成
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
     // turn on display FPS
@@ -36,11 +30,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
+    CCSize frameSize = pEGLView->getFrameSize();
+
+
+    // 4inch対応
+    if (frameSize.height / frameSize.width > 1.5) {
+        pEGLView->setDesignResolutionSize(640.0f, 1136.0f, kResolutionNoBorder);
+    } else {
+        pEGLView->setDesignResolutionSize(640.0f, 960.0f, kResolutionNoBorder);
+    }
+
     // create a scene. it's an autorelease object
     CCScene *pScene = GameScene::scene();
 
     // run
     pDirector->runWithScene(pScene);
+
 
     return true;
 }

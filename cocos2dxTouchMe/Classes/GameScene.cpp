@@ -28,96 +28,18 @@ bool GameScene::init()
     {
         return false;
     }
-
-    // 座標を表示するラベルを作成
-    descriptionLabel = CCLabelTTF::create("Touch Me!", "arial", 50);
-    descriptionLabel->setPosition(ccp(150, 520));
-    this->addChild(descriptionLabel);
     
-    //タッチ開始座標を表示するラベル
-    ccTouchBeganLabel = CCLabelTTF::create("[ccTouchBegan] (x, y) ", "arial", 30);
-    ccTouchBeganLabel ->setPosition(ccp(400, 450));
-    this->addChild(ccTouchBeganLabel);
+    //背景色を変更
+    CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
+    this->addChild(color);
 
-    //スワイプ時の座標を表示するラベル
-    ccTouchMovedLabel = CCLabelTTF::create("[ccTouchMoved] (x, y) ", "arial", 30);
-    ccTouchMovedLabel ->setPosition(ccp(400, 400));
-    this->addChild(ccTouchMovedLabel);
+    //画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
+    cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
+    float scaleSize = pEGLView->getDesignResolutionSize().width / 320;
 
-    //タッチ終了時の座標を表示するラベル
-    ccTouchEndedLabel = CCLabelTTF::create("[ccTouchEnded] (x, y) ", "arial", 30);
-    ccTouchEndedLabel ->setPosition(ccp(400, 350));
-    this->addChild(ccTouchEndedLabel);
-
-    //タッチキャンセル時の座標を表示するラベル
-    ccTouchCancelledLabel = CCLabelTTF::create("[ccTouchCancelled] (x, y) ", "arial", 30);
-    ccTouchCancelledLabel ->setPosition(ccp(400, 300));
-    this->addChild(ccTouchCancelledLabel);
-    
-    // タッチモードを設定する
-    this->setTouchMode(kCCTouchesOneByOne);
-    
-    
-    // タッチを有効にする
-    this->setTouchEnabled(true);
+    background = CCSprite::create("background.png");
+    background->setPosition(ccp(160 * scaleSize,240 * scaleSize));
+    this->addChild(background);
     
     return true;
 }
-
-
-// タッチ用メソッド
-bool GameScene::ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent)
-{
-    //タッチした座標を取得
-    CCPoint location =pTouch->getLocation();
-
-    //ログ出力
-    CCLog("[ccTouchBegan] (%f,%f)", location.x, location.y);
-
-    //画面出力
-    CCString *str = CCString::createWithFormat("[ccTouchBegan] (%f,%f)", location.x, location.y);
-    ccTouchBeganLabel->setString(str->getCString());
-    
-    return true;
-}
-
-void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
-
-    //タッチした座標を取得
-    CCPoint location =pTouch->getLocation();
-
-    //ログ出力
-    CCLog("[ccTouchMoved] (%f,%f)", location.x, location.y);
-    
-    //画面出力
-    CCString *str = CCString::createWithFormat("[ccTouchMoved] (%f,%f)", location.x, location.y);
-    ccTouchMovedLabel->setString(str->getCString());
-}
-
-void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
-
-    //タッチした座標を取得
-    CCPoint location =pTouch->getLocation();
-
-    //ログ出力
-    CCLog("[ccTouchEnded] (%f,%f)", location.x, location.y);
-    
-    //画面出力
-    CCString *str = CCString::createWithFormat("[ccTouchEnded] (%f,%f)", location.x, location.y);
-    ccTouchEndedLabel->setString(str->getCString());
-}
-
-void GameScene::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
-
-    //タッチした座標を取得
-    CCPoint location =pTouch->getLocation();
-
-    
-    //ログ出力
-    CCLog("[ccTouchCancelled] (%f,%f)", location.x, location.y);
-    
-    //画面出力
-    CCString *str = CCString::createWithFormat("[ccTouchCancelled] (%f,%f)", location.x, location.y);
-    ccTouchCancelledLabel->setString(str->getCString());
-}
-

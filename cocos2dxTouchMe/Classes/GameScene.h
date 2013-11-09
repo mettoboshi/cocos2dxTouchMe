@@ -19,18 +19,8 @@ public:
     CREATE_FUNC(GameScene);
 
     // 座標を表示するテキストフィールド
-    cocos2d::CCLabelTTF* descriptionLabel;
-    cocos2d::CCLabelTTF* ccTouchBeganLabel;
-    cocos2d::CCLabelTTF* ccTouchMovedLabel;
-    cocos2d::CCLabelTTF* ccTouchEndedLabel;
-    cocos2d::CCLabelTTF* ccTouchCancelledLabel;
-
+    cocos2d::CCSprite *background;
     
-    // タッチイベント用関数の宣言
-    bool ccTouchBegan(cocos2d::CCTouch *ptouch, cocos2d::CCEvent *pEvent);
-    void ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
-    void ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
-    void ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 };
 
 
