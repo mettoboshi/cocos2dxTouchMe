@@ -279,7 +279,7 @@
 		BE281DEF182DDECE001069B7 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = BE281DEE182DDECE001069B7 /* cpVect.c */; };
 		BE281DF7182DDECE001069B7 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE281DF6182DDECE001069B7 /* libwebsockets.a */; };
 		BE281DFD182DDECE001069B7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE281DFC182DDECE001069B7 /* AppDelegate.cpp */; };
-		BE281E00182DDECE001069B7 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE281DFF182DDECE001069B7 /* HelloWorldScene.cpp */; };
+		BE281E08182E136D001069B7 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE281E06182E136D001069B7 /* GameScene.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -871,8 +871,8 @@
 		BE281DF9182DDECE001069B7 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		BE281DFB182DDECE001069B7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		BE281DFC182DDECE001069B7 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		BE281DFE182DDECE001069B7 /* HelloWorldScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
-		BE281DFF182DDECE001069B7 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
+		BE281E06182E136D001069B7 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = Classes/GameScene.cpp; sourceTree = "<group>"; };
+		BE281E07182E136D001069B7 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = Classes/GameScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2093,10 +2093,10 @@
 		BE281DFA182DDECE001069B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BE281E06182E136D001069B7 /* GameScene.cpp */,
+				BE281E07182E136D001069B7 /* GameScene.h */,
 				BE281DFB182DDECE001069B7 /* AppDelegate.h */,
 				BE281DFC182DDECE001069B7 /* AppDelegate.cpp */,
-				BE281DFE182DDECE001069B7 /* HelloWorldScene.h */,
-				BE281DFF182DDECE001069B7 /* HelloWorldScene.cpp */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -2349,6 +2349,7 @@
 				BE281C87182DDECC001069B7 /* CDOpenALSupport.m in Sources */,
 				BE281D3E182DDECD001069B7 /* LocalStorage.cpp in Sources */,
 				BE281C8A182DDECC001069B7 /* CocosDenshion.m in Sources */,
+				BE281E08182E136D001069B7 /* GameScene.cpp in Sources */,
 				BE281C18182DDECB001069B7 /* ccUTF8.cpp in Sources */,
 				BE281B46182DDECA001069B7 /* CCLabelBMFont.cpp in Sources */,
 				BE281ABA182DDEC9001069B7 /* CCNode.cpp in Sources */,
@@ -2398,7 +2399,6 @@
 				BE281BAE182DDECB001069B7 /* CCImage.mm in Sources */,
 				BE281DC7182DDECE001069B7 /* cpRatchetJoint.c in Sources */,
 				BE281DC5182DDECE001069B7 /* cpPivotJoint.c in Sources */,
-				BE281E00182DDECE001069B7 /* HelloWorldScene.cpp in Sources */,
 				BE281BFC182DDECB001069B7 /* CCAnimationCache.cpp in Sources */,
 				BE281DB9182DDECE001069B7 /* cpConstraint.c in Sources */,
 				BE281B67182DDECA001069B7 /* CCMotionStreak.cpp in Sources */,
@@ -2564,6 +2564,7 @@
 				BE281E05182DDECE001069B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
