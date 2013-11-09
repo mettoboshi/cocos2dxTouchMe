@@ -18,7 +18,7 @@ public:
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(HelloWorld);
 
-    // 座標を表示するテキストフィールwド
+    // 座標を表示するテキストフィールド
     cocos2d::CCLabelTTF* descriptionLabel;
     cocos2d::CCLabelTTF* ccTouchBeganLabel;
     cocos2d::CCLabelTTF* ccTouchMovedLabel;
@@ -27,11 +27,10 @@ public:
 
     
     // タッチイベント用関数の宣言
-    bool ccTouchBegan(cocos2d::CCTouch* ptouch, cocos2d::CCEvent* pEvent);
+    bool ccTouchBegan(cocos2d::CCTouch *ptouch, cocos2d::CCEvent *pEvent);
     void ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     void ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     void ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
-
 };
 
 

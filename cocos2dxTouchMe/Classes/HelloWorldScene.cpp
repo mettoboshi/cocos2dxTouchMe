@@ -92,8 +92,6 @@ void HelloWorld::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent
     //画面出力
     CCString *str = CCString::createWithFormat("[ccTouchMoved] (%f,%f)", location.x, location.y);
     ccTouchMovedLabel->setString(str->getCString());
-
-
 }
 
 void HelloWorld::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
@@ -107,7 +105,6 @@ void HelloWorld::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent
     //画面出力
     CCString *str = CCString::createWithFormat("[ccTouchEnded] (%f,%f)", location.x, location.y);
     ccTouchEndedLabel->setString(str->getCString());
-
 }
 
 void HelloWorld::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
@@ -115,13 +112,12 @@ void HelloWorld::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
     //タッチした座標を取得
     CCPoint location =pTouch->getLocation();
 
+    
     //ログ出力
     CCLog("[ccTouchCancelled] (%f,%f)", location.x, location.y);
     
     //画面出力
     CCString *str = CCString::createWithFormat("[ccTouchCancelled] (%f,%f)", location.x, location.y);
     ccTouchCancelledLabel->setString(str->getCString());
-    
-
 }
 
