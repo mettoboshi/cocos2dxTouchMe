@@ -281,6 +281,8 @@
 		BE281DFD182DDECE001069B7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE281DFC182DDECE001069B7 /* AppDelegate.cpp */; };
 		BE281E08182E136D001069B7 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE281E06182E136D001069B7 /* GameScene.cpp */; };
 		BE281E0A182E2E5B001069B7 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BE281E09182E2E5B001069B7 /* background.png */; };
+		BE281E0C182E4450001069B7 /* highLight.png in Resources */ = {isa = PBXBuildFile; fileRef = BE281E0B182E4450001069B7 /* highLight.png */; };
+		BE281E0E182E61A0001069B7 /* alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = BE281E0D182E61A0001069B7 /* alpha.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -875,6 +877,8 @@
 		BE281E06182E136D001069B7 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = Classes/GameScene.cpp; sourceTree = "<group>"; };
 		BE281E07182E136D001069B7 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = Classes/GameScene.h; sourceTree = "<group>"; };
 		BE281E09182E2E5B001069B7 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		BE281E0B182E4450001069B7 /* highLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = highLight.png; sourceTree = "<group>"; };
+		BE281E0D182E61A0001069B7 /* alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -946,6 +950,8 @@
 		BE281A6A182DDEC9001069B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BE281E0D182E61A0001069B7 /* alpha.png */,
+				BE281E0B182E4450001069B7 /* highLight.png */,
 				BE281E09182E2E5B001069B7 /* background.png */,
 				BE281A6B182DDEC9001069B7 /* CloseNormal.png */,
 				BE281A6D182DDEC9001069B7 /* CloseSelected.png */,
@@ -2156,6 +2162,7 @@
 			files = (
 				BE281A7C182DDEC9001069B7 /* Icon.png in Resources */,
 				BE281B1F182DDECA001069B7 /* ChangeLog in Resources */,
+				BE281E0E182E61A0001069B7 /* alpha.png in Resources */,
 				BE281E0A182E2E5B001069B7 /* background.png in Resources */,
 				BE281A6C182DDEC9001069B7 /* CloseNormal.png in Resources */,
 				BE281A78182DDEC9001069B7 /* Icon-Small.png in Resources */,
@@ -2163,6 +2170,7 @@
 				BE281A72182DDEC9001069B7 /* HelloWorld.png in Resources */,
 				BE281A76182DDEC9001069B7 /* Icon-Small-50.png in Resources */,
 				BE281A80182DDEC9001069B7 /* iTunesArtwork in Resources */,
+				BE281E0C182E4450001069B7 /* highLight.png in Resources */,
 				BE281A7A182DDEC9001069B7 /* Icon-Small@2x.png in Resources */,
 				BE281A70182DDEC9001069B7 /* Default.png in Resources */,
 				BE281A6E182DDEC9001069B7 /* CloseSelected.png in Resources */,

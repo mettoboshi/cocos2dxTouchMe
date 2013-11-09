@@ -29,17 +29,95 @@ bool GameScene::init()
         return false;
     }
     
-    //背景色を変更
+    // 背景色を変更
     CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
     this->addChild(color);
 
-    //画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
+    // 画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
     cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
-    float scaleSize = pEGLView->getDesignResolutionSize().width / 320;
+    scaleSize = pEGLView->getDesignResolutionSize().width / 320;
 
     background = CCSprite::create("background.png");
     background->setPosition(ccp(160 * scaleSize,240 * scaleSize));
     this->addChild(background);
+
+    // 1マス分のスプライトを生成
+    highLight = CCSprite::create("alpha.png");
+    highLight->setPosition(ccp(baseX * scaleSize, baseY * scaleSize));
+    this->addChild(highLight);
+
+    
+    // タッチモードを設定する
+	this->setTouchMode(kCCTouchesOneByOne);
+
+	// タッチを有効にする
+	this->setTouchEnabled(true);
+
+    return true;
+}
+
+bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+    //タッチした座標を取得
+    CCPoint location =pTouch->getLocation();
+    CCPoint pos = getPanelPosition(location);
+    CCPoint realPos = setPanelPosition(pos);
+    highLight->setPosition(ccp(realPos.x, realPos.y));
+    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
+    highLight->setTexture(pTexture);
     
     return true;
+}
+
+void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+}
+
+void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
+    highLight->setTexture(pTexture);
+    
+}
+
+void GameScene::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+}
+
+CCPoint GameScene::getPanelPosition(CCPoint position)
+{
+    //ポジションからx, yを求め返戻
+    float tmpX = position.x / scaleSize;
+    float tmpY = position.y / scaleSize;
+    int x = floor((tmpX - basePositionX + itemSpace) / (itemSize + itemSpace));
+    int y = floor((tmpY - basePositionY + itemSpace) / (itemSize + itemSpace));
+
+    if (tmpX < basePositionX ||
+        tmpX > basePositionX + (itemSpace * 3) + (itemSize * 4)) {
+        return ccp(-1, -1);
+    }
+    if (tmpY < basePositionY ||
+        tmpY > basePositionY + (itemSpace * 3) + (itemSize * 4)) {
+        return ccp(-1, -1);
+    }
+
+    for (int i = 0; i < itemNum; i++) {
+        float spaceX = basePositionX + (itemSize * (i + 1)) + (itemSpace * i);
+        float spaceY = basePositionY + (itemSize * (i + 1)) + (itemSpace * i);
+        if (tmpX > spaceX && tmpX < spaceX + itemSpace) {
+            return ccp(-1, -1);
+        }
+
+        if (tmpY > spaceY && tmpY < spaceY + itemSpace) {
+            return ccp(-1, -1);
+        }
+    }
+    return ccp(x, y);
+}
+
+CCPoint GameScene::setPanelPosition(CCPoint position)
+{
+    //ポジションからx, yを求め返戻
+    int x = (baseX + (itemSpace * (position.x)) + (itemSize * position.x)) * scaleSize;
+    int y = (baseY + (itemSpace * (position.y)) + (itemSize * position.y)) * scaleSize;
+    CCLog("pos : %d, %d", x, y);
+
+    return ccp(x, y);
 }
