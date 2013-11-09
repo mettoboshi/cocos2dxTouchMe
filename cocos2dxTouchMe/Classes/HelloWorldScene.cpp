@@ -29,56 +29,99 @@ bool HelloWorld::init()
         return false;
     }
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+    // 座標を表示するラベルを作成
+    descriptionLabel = CCLabelTTF::create("Touch Me!", "arial", 50);
+    descriptionLabel->setPosition(ccp(150, 520));
+    this->addChild(descriptionLabel);
+    
+    //タッチ開始座標を表示するラベル
+    ccTouchBeganLabel = CCLabelTTF::create("[ccTouchBegan] (x, y) ", "arial", 30);
+    ccTouchBeganLabel ->setPosition(ccp(400, 450));
+    this->addChild(ccTouchBeganLabel);
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        this,
-                                        menu_selector(HelloWorld::menuCloseCallback) );
-    pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
+    //スワイプ時の座標を表示するラベル
+    ccTouchMovedLabel = CCLabelTTF::create("[ccTouchMoved] (x, y) ", "arial", 30);
+    ccTouchMovedLabel ->setPosition(ccp(400, 400));
+    this->addChild(ccTouchMovedLabel);
 
-    // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition( CCPointZero );
-    this->addChild(pMenu, 1);
+    //タッチ終了時の座標を表示するラベル
+    ccTouchEndedLabel = CCLabelTTF::create("[ccTouchEnded] (x, y) ", "arial", 30);
+    ccTouchEndedLabel ->setPosition(ccp(400, 350));
+    this->addChild(ccTouchEndedLabel);
 
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Thonburi", 34);
-
-    // ask director the window size
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-
-    // position the label on the center of the screen
-    pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
-
-    // add the label as a child to this layer
-    this->addChild(pLabel, 1);
-
-    // add "HelloWorld" splash screen"
-    CCSprite* pSprite = CCSprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    pSprite->setPosition( ccp(size.width/2, size.height/2) );
-
-    // add the sprite as a child to this layer
-    this->addChild(pSprite, 0);
+    //タッチキャンセル時の座標を表示するラベル
+    ccTouchCancelledLabel = CCLabelTTF::create("[ccTouchCancelled] (x, y) ", "arial", 30);
+    ccTouchCancelledLabel ->setPosition(ccp(400, 300));
+    this->addChild(ccTouchCancelledLabel);
+    
+    // タッチモードを設定する
+    this->setTouchMode(kCCTouchesOneByOne);
+    
+    
+    // タッチを有効にする
+    this->setTouchEnabled(true);
     
     return true;
 }
 
-void HelloWorld::menuCloseCallback(CCObject* pSender)
-{
-    CCDirector::sharedDirector()->end();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+// タッチ用メソッド
+bool HelloWorld::ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent)
+{
+    //タッチした座標を取得
+    CCPoint location =pTouch->getLocation();
+
+    //ログ出力
+    CCLog("[ccTouchBegan] (%f,%f)", location.x, location.y);
+
+    //画面出力
+    CCString *str = CCString::createWithFormat("[ccTouchBegan] (%f,%f)", location.x, location.y);
+    ccTouchBeganLabel->setString(str->getCString());
+    
+    return true;
 }
+
+void HelloWorld::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+
+    //タッチした座標を取得
+    CCPoint location =pTouch->getLocation();
+
+    //ログ出力
+    CCLog("[ccTouchMoved] (%f,%f)", location.x, location.y);
+    
+    //画面出力
+    CCString *str = CCString::createWithFormat("[ccTouchMoved] (%f,%f)", location.x, location.y);
+    ccTouchMovedLabel->setString(str->getCString());
+
+
+}
+
+void HelloWorld::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+
+    //タッチした座標を取得
+    CCPoint location =pTouch->getLocation();
+
+    //ログ出力
+    CCLog("[ccTouchEnded] (%f,%f)", location.x, location.y);
+    
+    //画面出力
+    CCString *str = CCString::createWithFormat("[ccTouchEnded] (%f,%f)", location.x, location.y);
+    ccTouchEndedLabel->setString(str->getCString());
+
+}
+
+void HelloWorld::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+
+    //タッチした座標を取得
+    CCPoint location =pTouch->getLocation();
+
+    //ログ出力
+    CCLog("[ccTouchCancelled] (%f,%f)", location.x, location.y);
+    
+    //画面出力
+    CCString *str = CCString::createWithFormat("[ccTouchCancelled] (%f,%f)", location.x, location.y);
+    ccTouchCancelledLabel->setString(str->getCString());
+    
+
+}
+
