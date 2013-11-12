@@ -3,6 +3,7 @@
 
 using namespace cocos2d;
 using namespace CocosDenshion;
+using namespace std;
 
 CCScene* GameScene::scene()
 {
@@ -40,20 +41,54 @@ bool GameScene::init()
     background = CCSprite::create("background.png");
     background->setPosition(ccp(160 * scaleSize,240 * scaleSize));
     this->addChild(background);
-
+    
     // 1マス分のスプライトを生成
     highLight = CCSprite::create("alpha.png");
     highLight->setPosition(ccp(baseX * scaleSize, baseY * scaleSize));
     this->addChild(highLight);
 
+    // 1マス分のスプライトを生成
+    touchArea = CCSprite::create("alpha.png");
+    touchArea->setPosition(ccp(baseX * scaleSize, baseY * scaleSize));
+    this->addChild(touchArea);
+    
+    gameTime = 0;
     
     // タッチモードを設定する
 	this->setTouchMode(kCCTouchesOneByOne);
 
 	// タッチを有効にする
 	this->setTouchEnabled(true);
-
+    
+    this->schedule(schedule_selector(GameScene::gameTimer), 1);
     return true;
+}
+
+
+void GameScene::gameTimer(float time)
+{
+    gameTime += time;
+//    CCString* timeString = CCString::createWithFormat("%2.0f秒", gameTime);
+//    CCLog("%s",timeString->getCString());
+
+    // 0-15の乱数を求める
+    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
+    touchArea->setTexture(pTexture);
+    
+    int randNum = arc4random() % 16;
+    
+    // マスに当てはめる
+    CCPoint pos = ccp(floor(randNum / 4), randNum % 4);
+    CCPoint pos2 = setPanelPosition(pos);
+    
+    touchArea->setPosition(pos2);
+    pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
+    touchArea->setTexture(pTexture);
+    
+//    if(gameTime > 5) {
+//        this->pauseSchedulerAndActions();
+//        this->resumeSchedulerAndActions();
+//    }
 }
 
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)

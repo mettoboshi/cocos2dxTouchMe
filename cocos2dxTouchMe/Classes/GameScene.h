@@ -34,6 +34,9 @@ public:
     // ハイライト用スプライト
     cocos2d::CCSprite *highLight;
 
+    // タッチエリア表示用のスプライト
+    cocos2d::CCSprite *touchArea;
+    
     // タッチイベント用関数の宣言
     bool ccTouchBegan(cocos2d::CCTouch* ptouch, cocos2d::CCEvent* pEvent);
     void ccTouchMoved(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
@@ -42,6 +45,10 @@ public:
 
     cocos2d::CCPoint getPanelPosition(cocos2d::CCPoint position);
     cocos2d::CCPoint setPanelPosition(cocos2d::CCPoint position);
+
+    //タイマー用
+    float gameTime = 0.0f;
+    void gameTimer(float time);
 };
 
 
