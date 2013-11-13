@@ -60,7 +60,7 @@ bool GameScene::init()
 	// タッチを有効にする
 	this->setTouchEnabled(true);
     
-    this->schedule(schedule_selector(GameScene::gameTimer), 1);
+    this->schedule(schedule_selector(GameScene::gameTimer), 3);
     return true;
 }
 
@@ -71,18 +71,20 @@ void GameScene::gameTimer(float time)
 //    CCString* timeString = CCString::createWithFormat("%2.0f秒", gameTime);
 //    CCLog("%s",timeString->getCString());
 
-    // 0-15の乱数を求める
+    //初期化
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
     touchArea->setTexture(pTexture);
+    touchFlag = false;
     
+    // 0-15の乱数を求める
     int randNum = arc4random() % 16;
     
     // マスに当てはめる
-    CCPoint pos = ccp(floor(randNum / 4), randNum % 4);
-    CCPoint pos2 = setPanelPosition(pos);
+    areaPos = ccp(floor(randNum / 4), randNum % 4);
+    CCPoint pos = setPanelPosition(areaPos);
     
-    touchArea->setPosition(pos2);
-    pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
+    touchArea->setPosition(pos);
+    pTexture = CCTextureCache::sharedTextureCache()->addImage("touchArea.png");
     touchArea->setTexture(pTexture);
     
 //    if(gameTime > 5) {
@@ -96,6 +98,14 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     //タッチした座標を取得
     CCPoint location =pTouch->getLocation();
     CCPoint pos = getPanelPosition(location);
+    
+    //タッチした場所と光っている場所が同じなら得点を加算し、フラグをtrueにする
+    if (pos.equals(areaPos) && touchFlag == false) {
+        CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
+        touchArea->setTexture(pTexture);
+        touchFlag = true;
+    }
+    
     CCPoint realPos = setPanelPosition(pos);
     highLight->setPosition(ccp(realPos.x, realPos.y));
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");

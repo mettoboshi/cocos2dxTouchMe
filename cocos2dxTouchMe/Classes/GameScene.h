@@ -36,6 +36,10 @@ public:
 
     // タッチエリア表示用のスプライト
     cocos2d::CCSprite *touchArea;
+    cocos2d::CCPoint areaPos;
+    
+    // タッチ可否フラグ
+    bool touchFlag = false;
     
     // タッチイベント用関数の宣言
     bool ccTouchBegan(cocos2d::CCTouch* ptouch, cocos2d::CCEvent* pEvent);
