@@ -53,6 +53,12 @@ public:
     //タイマー用
     float gameTime = 0.0f;
     void gameTimer(float time);
+    
+    //得点表示用変数
+    cocos2d::CCLabelTTF *scoreLabel;
+    int score = 0;
+    cocos2d::CCString *str;
+    
 };
 
 

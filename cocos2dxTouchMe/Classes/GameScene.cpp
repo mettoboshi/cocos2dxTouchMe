@@ -51,6 +51,14 @@ bool GameScene::init()
     touchArea = CCSprite::create("alpha.png");
     touchArea->setPosition(ccp(baseX * scaleSize, baseY * scaleSize));
     this->addChild(touchArea);
+
+    // 得点表示用のラベルを用意
+    score = 0;
+    str = CCString::createWithFormat("Score : %7d", score);
+    scoreLabel = CCLabelTTF::create(str->getCString() , "arial", 40);
+    scoreLabel->setColor(ccc3(0,0,0));
+    scoreLabel->setPosition(ccp(230 * scaleSize, 430 * scaleSize));
+    this->addChild(scoreLabel);
     
     gameTime = 0;
     
@@ -103,9 +111,17 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     if (pos.equals(areaPos) && touchFlag == false) {
         CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
         touchArea->setTexture(pTexture);
+        score += 10;
+        str = CCString::createWithFormat("Score : %7d", score);
+        scoreLabel->setString(str->getCString());
         touchFlag = true;
+    } else {
+        if (score >= 10)
+        score -= 10;
+        str = CCString::createWithFormat("Score : %7d", score);
+        scoreLabel->setString(str->getCString());
     }
-    
+
     CCPoint realPos = setPanelPosition(pos);
     highLight->setPosition(ccp(realPos.x, realPos.y));
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
@@ -120,7 +136,6 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
     highLight->setTexture(pTexture);
-    
 }
 
 void GameScene::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
