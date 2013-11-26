@@ -284,6 +284,12 @@
 		BE281E0C182E4450001069B7 /* highLight.png in Resources */ = {isa = PBXBuildFile; fileRef = BE281E0B182E4450001069B7 /* highLight.png */; };
 		BE281E0E182E61A0001069B7 /* alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = BE281E0D182E61A0001069B7 /* alpha.png */; };
 		BE849C371832928800549951 /* touchArea.png in Resources */ = {isa = PBXBuildFile; fileRef = BE849C361832928800549951 /* touchArea.png */; };
+		BE849C391833DBBB00549951 /* progress-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = BE849C381833DBBB00549951 /* progress-bar.png */; };
+		BEBFA879183DDC2D00BE513A /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA878183DDC2D00BE513A /* start.png */; };
+		BEBFA87C184236FB00BE513A /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA87A184236FB00BE513A /* TitleScene.cpp */; };
+		BEBFA8831843AF6800BE513A /* preference.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA8801843AF6800BE513A /* preference.png */; };
+		BEBFA8841843AF6800BE513A /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA8811843AF6800BE513A /* title.png */; };
+		BEBFA8851843AF6800BE513A /* score.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA8821843AF6800BE513A /* score.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -881,6 +887,13 @@
 		BE281E0B182E4450001069B7 /* highLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = highLight.png; sourceTree = "<group>"; };
 		BE281E0D182E61A0001069B7 /* alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha.png; sourceTree = "<group>"; };
 		BE849C361832928800549951 /* touchArea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touchArea.png; sourceTree = "<group>"; };
+		BE849C381833DBBB00549951 /* progress-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar.png"; sourceTree = "<group>"; };
+		BEBFA878183DDC2D00BE513A /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
+		BEBFA87A184236FB00BE513A /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TitleScene.cpp; path = Classes/TitleScene.cpp; sourceTree = "<group>"; };
+		BEBFA87B184236FB00BE513A /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleScene.h; path = Classes/TitleScene.h; sourceTree = "<group>"; };
+		BEBFA8801843AF6800BE513A /* preference.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preference.png; sourceTree = "<group>"; };
+		BEBFA8811843AF6800BE513A /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
+		BEBFA8821843AF6800BE513A /* score.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -952,6 +965,11 @@
 		BE281A6A182DDEC9001069B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BEBFA8801843AF6800BE513A /* preference.png */,
+				BEBFA8811843AF6800BE513A /* title.png */,
+				BEBFA8821843AF6800BE513A /* score.png */,
+				BEBFA878183DDC2D00BE513A /* start.png */,
+				BE849C381833DBBB00549951 /* progress-bar.png */,
 				BE281E0D182E61A0001069B7 /* alpha.png */,
 				BE849C361832928800549951 /* touchArea.png */,
 				BE281E0B182E4450001069B7 /* highLight.png */,
@@ -2105,6 +2123,8 @@
 		BE281DFA182DDECE001069B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BEBFA87A184236FB00BE513A /* TitleScene.cpp */,
+				BEBFA87B184236FB00BE513A /* TitleScene.h */,
 				BE281E06182E136D001069B7 /* GameScene.cpp */,
 				BE281E07182E136D001069B7 /* GameScene.h */,
 				BE281DFB182DDECE001069B7 /* AppDelegate.h */,
@@ -2163,11 +2183,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEBFA8831843AF6800BE513A /* preference.png in Resources */,
 				BE281A7C182DDEC9001069B7 /* Icon.png in Resources */,
+				BEBFA8841843AF6800BE513A /* title.png in Resources */,
 				BE281B1F182DDECA001069B7 /* ChangeLog in Resources */,
+				BE849C391833DBBB00549951 /* progress-bar.png in Resources */,
 				BE281E0E182E61A0001069B7 /* alpha.png in Resources */,
 				BE281E0A182E2E5B001069B7 /* background.png in Resources */,
 				BE281A6C182DDEC9001069B7 /* CloseNormal.png in Resources */,
+				BEBFA879183DDC2D00BE513A /* start.png in Resources */,
 				BE281A78182DDEC9001069B7 /* Icon-Small.png in Resources */,
 				BE281A74182DDEC9001069B7 /* Icon-72.png in Resources */,
 				BE281A72182DDEC9001069B7 /* HelloWorld.png in Resources */,
@@ -2175,6 +2199,7 @@
 				BE849C371832928800549951 /* touchArea.png in Resources */,
 				BE281A80182DDEC9001069B7 /* iTunesArtwork in Resources */,
 				BE281E0C182E4450001069B7 /* highLight.png in Resources */,
+				BEBFA8851843AF6800BE513A /* score.png in Resources */,
 				BE281A7A182DDEC9001069B7 /* Icon-Small@2x.png in Resources */,
 				BE281A70182DDEC9001069B7 /* Default.png in Resources */,
 				BE281A6E182DDEC9001069B7 /* CloseSelected.png in Resources */,
@@ -2273,6 +2298,7 @@
 				BE281DC1182DDECE001069B7 /* cpGrooveJoint.c in Sources */,
 				BE281D57182DDECD001069B7 /* AnimationState.cpp in Sources */,
 				BE281AA7182DDEC9001069B7 /* CCActionManager.cpp in Sources */,
+				BEBFA87C184236FB00BE513A /* TitleScene.cpp in Sources */,
 				BE281CE9182DDECC001069B7 /* CCComAttribute.cpp in Sources */,
 				BE281C63182DDECC001069B7 /* CCTileMapAtlas.cpp in Sources */,
 				BE281B50182DDECA001069B7 /* CCScene.cpp in Sources */,

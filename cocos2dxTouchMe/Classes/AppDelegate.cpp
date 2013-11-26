@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+#include "TitleScene.h"
 #include "GameScene.h"
 
 USING_NS_CC;
@@ -20,7 +21,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     CCEGLView *pEGLView = CCEGLView::sharedOpenGLView();
-
+    
 	//画面サイズを取得するためにCCEGLViewを作成
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
@@ -41,8 +42,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = GameScene::scene();
-
+    CCScene *pScene = TitleScene::scene();
+    //CCScene *test = GameScene::scene();
     // run
     pDirector->runWithScene(pScene);
 

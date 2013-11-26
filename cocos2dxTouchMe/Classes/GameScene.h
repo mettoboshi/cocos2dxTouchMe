@@ -1,5 +1,5 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __GAME_SCENE_H__
+#define __GAME_SCENE_H__
 
 #include "cocos2d.h"
 
@@ -34,6 +34,10 @@ public:
     // ハイライト用スプライト
     cocos2d::CCSprite *highLight;
 
+    // プログレスバー用スプライト
+    cocos2d::CCSprite *progressBar;
+    cocos2d::CCProgressTimer *progressTimer;
+    
     // タッチエリア表示用のスプライト
     cocos2d::CCSprite *touchArea;
     cocos2d::CCPoint areaPos;
@@ -53,6 +57,7 @@ public:
     //タイマー用
     float gameTime = 0.0f;
     void gameTimer(float time);
+    void gameEndTimer(float time);
     
     //得点表示用変数
     cocos2d::CCLabelTTF *scoreLabel;
@@ -61,5 +66,4 @@ public:
     
 };
 
-
-#endif // __HELLOWORLD_SCENE_H__
+#endif

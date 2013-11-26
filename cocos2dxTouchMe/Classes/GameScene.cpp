@@ -57,8 +57,19 @@ bool GameScene::init()
     str = CCString::createWithFormat("Score : %7d", score);
     scoreLabel = CCLabelTTF::create(str->getCString() , "arial", 40);
     scoreLabel->setColor(ccc3(0,0,0));
-    scoreLabel->setPosition(ccp(230 * scaleSize, 430 * scaleSize));
+    scoreLabel->setPosition(ccp(230 * scaleSize, 450 * scaleSize));
     this->addChild(scoreLabel);
+    
+    // プログレスバーを生成
+    progressBar = CCSprite::create("progress-bar.png");
+    progressTimer = CCProgressTimer::create(progressBar);
+    progressTimer->setType(kCCProgressTimerTypeBar);
+    progressTimer->setPercentage(100.0f);
+    progressTimer->setMidpoint(ccp(0.0f, 0.0f));
+    progressTimer->setBarChangeRate(ccp(1.0f, 0.0f));
+    progressTimer->setPosition(ccp(150 * scaleSize, 420 * scaleSize));
+    this->addChild(progressTimer);
+
     
     gameTime = 0;
     
@@ -69,13 +80,26 @@ bool GameScene::init()
 	this->setTouchEnabled(true);
     
     this->schedule(schedule_selector(GameScene::gameTimer), 3);
+    this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
+
     return true;
 }
 
+void GameScene::gameEndTimer(float time)
+{
+    gameTime++;
+    
+    progressTimer->setPercentage(100.0f - (gameTime * 10));
+    
+    if (gameTime > 10) {
+        this->pauseSchedulerAndActions();
+    }
+    return;
+}
 
 void GameScene::gameTimer(float time)
 {
-    gameTime += time;
+//    gameTime += time;
 //    CCString* timeString = CCString::createWithFormat("%2.0f秒", gameTime);
 //    CCLog("%s",timeString->getCString());
 
