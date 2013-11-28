@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GameScene.h"
+#include "AppPlatform.h"
 
 class TitleScene : public cocos2d::CCLayer
 {
@@ -28,22 +29,9 @@ public:
     cocos2d::CCSprite *startBtn;
     cocos2d::CCSprite *preferenceBtn;
 
-    
-    // タッチイベント用関数の宣言
-/*
-    bool ccTouchBegan(cocos2d::CCTouch* ptouch, cocos2d::CCEvent* pEvent);
-    void ccTouchMoved(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
-    void ccTouchEnded(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
-    void ccTouchCancelled(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
-    
-    cocos2d::CCPoint getPanelPosition(cocos2d::CCPoint position);
-    cocos2d::CCPoint setPanelPosition(cocos2d::CCPoint position);
-*/
     void screenChange();
     void modalPush();
-
     
 };
-
 
 #endif

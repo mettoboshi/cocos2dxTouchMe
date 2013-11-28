@@ -290,6 +290,11 @@
 		BEBFA8831843AF6800BE513A /* preference.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA8801843AF6800BE513A /* preference.png */; };
 		BEBFA8841843AF6800BE513A /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA8811843AF6800BE513A /* title.png */; };
 		BEBFA8851843AF6800BE513A /* score.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA8821843AF6800BE513A /* score.png */; };
+		BEBFA88B1844BDEA00BE513A /* AdViewManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA88A1844BDEA00BE513A /* AdViewManager.mm */; };
+		BEBFA88E1844BE6800BE513A /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA88C1844BE6800BE513A /* libNendAd.a */; };
+		BEBFA8901844BEA300BE513A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA88F1844BEA300BE513A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		BEBFA8921844BEB400BE513A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA8911844BEB400BE513A /* Security.framework */; };
+		BEBFA8951844F7D200BE513A /* AppPlatform.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA8941844F7D200BE513A /* AppPlatform.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -894,6 +899,14 @@
 		BEBFA8801843AF6800BE513A /* preference.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preference.png; sourceTree = "<group>"; };
 		BEBFA8811843AF6800BE513A /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		BEBFA8821843AF6800BE513A /* score.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score.png; sourceTree = "<group>"; };
+		BEBFA8891844BD7B00BE513A /* AdViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdViewManager.h; sourceTree = "<group>"; };
+		BEBFA88A1844BDEA00BE513A /* AdViewManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdViewManager.mm; sourceTree = "<group>"; };
+		BEBFA88C1844BE6800BE513A /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNendAd.a; path = Classes/iOS/libNendAd.a; sourceTree = "<group>"; };
+		BEBFA88D1844BE6800BE513A /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NADView.h; path = Classes/iOS/NADView.h; sourceTree = "<group>"; };
+		BEBFA88F1844BEA300BE513A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		BEBFA8911844BEB400BE513A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BEBFA8931844F7D200BE513A /* AppPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppPlatform.h; path = Classes/AppPlatform.h; sourceTree = "<group>"; };
+		BEBFA8941844F7D200BE513A /* AppPlatform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppPlatform.mm; path = Classes/AppPlatform.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -901,6 +914,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEBFA8921844BEB400BE513A /* Security.framework in Frameworks */,
+				BEBFA8901844BEA300BE513A /* AdSupport.framework in Frameworks */,
 				BE281A5E182DDEC9001069B7 /* OpenAL.framework in Frameworks */,
 				BE281DF7182DDECE001069B7 /* libwebsockets.a in Frameworks */,
 				BE281BD1182DDECB001069B7 /* libwebp.a in Frameworks */,
@@ -912,6 +927,7 @@
 				BE281A5C182DDEC9001069B7 /* OpenGLES.framework in Frameworks */,
 				BE281A66182DDEC9001069B7 /* Foundation.framework in Frameworks */,
 				BE281A60182DDEC9001069B7 /* AudioToolbox.framework in Frameworks */,
+				BEBFA88E1844BE6800BE513A /* libNendAd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,6 +954,8 @@
 		BE281A58182DDEC9001069B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BEBFA8911844BEB400BE513A /* Security.framework */,
+				BEBFA88F1844BEA300BE513A /* AdSupport.framework */,
 				BE281A59182DDEC9001069B7 /* QuartzCore.framework */,
 				BE281A5B182DDEC9001069B7 /* OpenGLES.framework */,
 				BE281A5D182DDEC9001069B7 /* OpenAL.framework */,
@@ -2123,12 +2141,18 @@
 		BE281DFA182DDECE001069B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BEBFA8931844F7D200BE513A /* AppPlatform.h */,
+				BEBFA8941844F7D200BE513A /* AppPlatform.mm */,
+				BEBFA88C1844BE6800BE513A /* libNendAd.a */,
+				BEBFA88D1844BE6800BE513A /* NADView.h */,
 				BEBFA87A184236FB00BE513A /* TitleScene.cpp */,
 				BEBFA87B184236FB00BE513A /* TitleScene.h */,
 				BE281E06182E136D001069B7 /* GameScene.cpp */,
 				BE281E07182E136D001069B7 /* GameScene.h */,
 				BE281DFB182DDECE001069B7 /* AppDelegate.h */,
 				BE281DFC182DDECE001069B7 /* AppDelegate.cpp */,
+				BEBFA8891844BD7B00BE513A /* AdViewManager.h */,
+				BEBFA88A1844BDEA00BE513A /* AdViewManager.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -2215,6 +2239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEBFA8951844F7D200BE513A /* AppPlatform.mm in Sources */,
 				BE281C69182DDECC001069B7 /* CCTMXObjectGroup.cpp in Sources */,
 				BE281CBE182DDECC001069B7 /* CCLabelTTFLoader.cpp in Sources */,
 				BE281C7A182DDECC001069B7 /* CCTouchHandler.cpp in Sources */,
@@ -2465,6 +2490,7 @@
 				BE281C66182DDECC001069B7 /* CCTMXLayer.cpp in Sources */,
 				BE281CA5182DDECC001069B7 /* CCBReader.cpp in Sources */,
 				BE281CFE182DDECC001069B7 /* CCControlColourPicker.cpp in Sources */,
+				BEBFA88B1844BDEA00BE513A /* AdViewManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2547,6 +2573,7 @@
 					"$(inherited)",
 					/Users/mettoboshi/Dropbox/src/XcodeWorkspace/cocos2dxTouchMe/cocos2dxTouchMe/libs/cocos2dx/platform/third_party/ios/libraries,
 					/Users/mettoboshi/Dropbox/src/XcodeWorkspace/cocos2dxTouchMe/cocos2dxTouchMe/libs/libwebsockets/ios/lib,
+					/Users/mettoboshi/Dropbox/src/XcodeWorkspace/cocos2dxTouchMe/cocos2dxTouchMe/Classes/iOS,
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -2573,6 +2600,7 @@
 					"$(inherited)",
 					/Users/mettoboshi/Dropbox/src/XcodeWorkspace/cocos2dxTouchMe/cocos2dxTouchMe/libs/cocos2dx/platform/third_party/ios/libraries,
 					/Users/mettoboshi/Dropbox/src/XcodeWorkspace/cocos2dxTouchMe/cocos2dxTouchMe/libs/libwebsockets/ios/lib,
+					/Users/mettoboshi/Dropbox/src/XcodeWorkspace/cocos2dxTouchMe/cocos2dxTouchMe/Classes/iOS,
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",

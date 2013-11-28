@@ -112,11 +112,38 @@ static AppDelegate s_sharedApplication;
      cocos2d::CCDirector::sharedDirector()->purgeCachedData();
 }
 
+// AppController.mm
 
-- (void)dealloc {
-    [super dealloc];
+- (void)showAdView
+{
+    if (!nadView) {
+        
+        CGRect frame = CGRectMake(0.f, 430.f, NAD_ADVIEW_SIZE_320x50.width, NAD_ADVIEW_SIZE_320x50.height);
+        
+        // NADView の作成
+        nadView = [[NADView alloc] initWithFrame:frame];
+        [nadView setNendID:@"a6eca9dd074372c898dd1df549301f277c53f2b9" spotID:@"3172"];
+        [nadView setDelegate:self];
+        
+        [viewController.view addSubview:nadView];
+        [nadView load];
+    }
 }
 
+// 広告のロードが完了した時に実行される
+- (void)nadViewDidFinishLoad:(NADView *)adView
+{
+    NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)dealloc
+{
+    [window release];
+    [nadView setDelegate:nil];
+    [nadView release];
+    
+    [super dealloc];
+}
 
 @end
 

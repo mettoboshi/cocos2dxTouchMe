@@ -1,6 +1,8 @@
 #include "TitleScene.h"
 #include "SimpleAudioEngine.h"
 #include "GameScene.h"
+#include "AppPlatform.h"
+#include "AdViewManager.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -61,6 +63,8 @@ bool TitleScene::init()
     this->addChild(moveMenu);
     this->addChild(modalMenu);
     
+    AdViewManager::showAdView();
+    
     return true;
 }
 
@@ -76,11 +80,14 @@ void TitleScene::screenChange() {
 
 void TitleScene::modalPush() {
     // Transitionの設定
-    float duration = 0.5f;
-    CCScene* pScene = CCTransitionPageTurn::create(duration, GameScene::scene(), false);
+//    float duration = 0.5f;
+//    CCScene* pScene = CCTransitionPageTurn::create(duration, GameScene::scene(), false);
     
     // GameSceneへ画面遷移
-    CCDirector::sharedDirector()->pushScene(pScene);
+//    CCDirector::sharedDirector()->pushScene(pScene);
+    
+    CCLog("%s",AppPlatform::getAppVersion());
+    
     return;
 }
 
