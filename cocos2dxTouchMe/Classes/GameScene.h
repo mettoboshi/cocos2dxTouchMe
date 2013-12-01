@@ -52,6 +52,7 @@ public:
     void ccTouchCancelled(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
 
     cocos2d::CCPoint getPanelPosition(cocos2d::CCPoint position);
+    bool isContain(cocos2d::CCPoint location);
     cocos2d::CCPoint setPanelPosition(cocos2d::CCPoint position);
 
     //タイマー用

@@ -4,6 +4,7 @@
 #include "SimpleAudioEngine.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "AppData.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;

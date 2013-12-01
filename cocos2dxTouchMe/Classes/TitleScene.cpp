@@ -1,8 +1,8 @@
 #include "TitleScene.h"
 #include "SimpleAudioEngine.h"
 #include "GameScene.h"
-#include "AppPlatform.h"
 #include "AdViewManager.h"
+#include "AppData.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -47,28 +47,21 @@ bool TitleScene::init()
     this->addChild(background);
 
     // CCMenu
-    CCMenuItemImage *moveSceneItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::screenChange));
+    CCMenuItemImage *easyStartItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::easyStart));
+    CCMenuItemImage *normalStartItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::nomalStart));
+    CCMenuItemImage *hardStartItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::hardStart));
 
-    moveSceneItem->setPosition(ccp(200,200));
-    CCMenu* moveMenu = CCMenu::create(moveSceneItem, NULL);
-    moveMenu->setPosition(CCPointZero);
-
+    CCMenu* testMenu = CCMenu::create(easyStartItem, normalStartItem, hardStartItem, NULL);
+    testMenu->alignItemsVerticallyWithPadding(50.0f);
     
-    CCMenuItemImage *modalSceneItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::modalPush));
-
-    modalSceneItem->setPosition(ccp(400,200));
-    CCMenu* modalMenu = CCMenu::create(modalSceneItem, NULL);
-    modalMenu->setPosition(CCPointZero);
-    
-    this->addChild(moveMenu);
-    this->addChild(modalMenu);
+    this->addChild(testMenu);
     
     AdViewManager::showAdView();
     
     return true;
 }
 
-void TitleScene::screenChange() {
+void TitleScene::easyStart() {
     // Transitionの設定
     float duration = 0.5f;
     CCScene* pScene = CCTransitionPageTurn::create(duration, GameScene::scene(), false);
@@ -78,7 +71,8 @@ void TitleScene::screenChange() {
     return;
 }
 
-void TitleScene::modalPush() {
+
+void TitleScene::nomalStart() {
     // Transitionの設定
 //    float duration = 0.5f;
 //    CCScene* pScene = CCTransitionPageTurn::create(duration, GameScene::scene(), false);
@@ -86,8 +80,30 @@ void TitleScene::modalPush() {
     // GameSceneへ画面遷移
 //    CCDirector::sharedDirector()->pushScene(pScene);
     
-    CCLog("%s",AppPlatform::getAppVersion());
+    AppData* appData = AppData::getInstance();
+    appData->level = AppData::Normal;
+    
+    float duration = 0.5f;
+    CCScene* pScene = CCTransitionPageTurn::create(duration, GameScene::scene(), false);
+    
+    // GameSceneへ画面遷移
+    CCDirector::sharedDirector()->replaceScene(pScene);
+
+    return;
+}
+
+void TitleScene::hardStart() {
+
+    AppData* appData = AppData::getInstance();
+    appData->level = AppData::Hard;
+    
+    float duration = 0.5f;
+    CCScene* pScene = CCTransitionPageTurn::create(duration, GameScene::scene(), false);
+    
+    // GameSceneへ画面遷移
+    CCDirector::sharedDirector()->replaceScene(pScene);
     
     return;
 }
+
 

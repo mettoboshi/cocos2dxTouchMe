@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "GameScene.h"
-#include "AppPlatform.h"
 
 class TitleScene : public cocos2d::CCLayer
 {
@@ -25,12 +24,12 @@ public:
     
     // 背景画像用スプライト
     cocos2d::CCSprite *background;
-    // ボタン用スプライト
-    cocos2d::CCSprite *startBtn;
-    cocos2d::CCSprite *preferenceBtn;
 
-    void screenChange();
-    void modalPush();
+    void easyStart();
+    void nomalStart();
+    void hardStart();
+
+    
     
 };
 

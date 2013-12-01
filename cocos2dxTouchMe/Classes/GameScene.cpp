@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
+#include "AppData.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -70,6 +71,16 @@ bool GameScene::init()
     progressTimer->setPosition(ccp(150 * scaleSize, 420 * scaleSize));
     this->addChild(progressTimer);
 
+    AppData* appData = AppData::getInstance();
+
+    float time = 1.0f;
+    if(appData->level == 0) {
+        time = 1.0f;
+    } else if(appData->level == 1) {
+        time = 0.5f;
+    } else if(appData->level == 2) {
+        time = 0.2f;
+    }
     
     gameTime = 0;
     
@@ -79,8 +90,8 @@ bool GameScene::init()
 	// タッチを有効にする
 	this->setTouchEnabled(true);
     
-    this->schedule(schedule_selector(GameScene::gameTimer), 3);
     this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
+    this->schedule(schedule_selector(GameScene::gameTimer), time);
 
     return true;
 }
@@ -91,7 +102,7 @@ void GameScene::gameEndTimer(float time)
     
     progressTimer->setPercentage(100.0f - (gameTime * 10));
     
-    if (gameTime > 10) {
+    if (gameTime >= 10) {
         this->pauseSchedulerAndActions();
     }
     return;
@@ -99,10 +110,6 @@ void GameScene::gameEndTimer(float time)
 
 void GameScene::gameTimer(float time)
 {
-//    gameTime += time;
-//    CCString* timeString = CCString::createWithFormat("%2.0f秒", gameTime);
-//    CCLog("%s",timeString->getCString());
-
     //初期化
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
     touchArea->setTexture(pTexture);
@@ -118,18 +125,18 @@ void GameScene::gameTimer(float time)
     touchArea->setPosition(pos);
     pTexture = CCTextureCache::sharedTextureCache()->addImage("touchArea.png");
     touchArea->setTexture(pTexture);
-    
-//    if(gameTime > 5) {
-//        this->pauseSchedulerAndActions();
-//        this->resumeSchedulerAndActions();
-//    }
 }
 
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     //タッチした座標を取得
     CCPoint location =pTouch->getLocation();
+    
     CCPoint pos = getPanelPosition(location);
+    
+    if(!isContain(pos)) {
+        return false;
+    }
     
     //タッチした場所と光っている場所が同じなら得点を加算し、フラグをtrueにする
     if (pos.equals(areaPos) && touchFlag == false) {
@@ -140,8 +147,12 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         scoreLabel->setString(str->getCString());
         touchFlag = true;
     } else {
-        if (score >= 10)
-        score -= 10;
+        if (score >= 10) {
+            score -= 10;
+        }
+        
+        //score = max(0, score - 10);
+        
         str = CCString::createWithFormat("Score : %7d", score);
         scoreLabel->setString(str->getCString());
     }
@@ -170,30 +181,18 @@ CCPoint GameScene::getPanelPosition(CCPoint position)
     //ポジションからx, yを求め返戻
     float tmpX = position.x / scaleSize;
     float tmpY = position.y / scaleSize;
-    int x = floor((tmpX - basePositionX + itemSpace) / (itemSize + itemSpace));
-    int y = floor((tmpY - basePositionY + itemSpace) / (itemSize + itemSpace));
+    int x = floor((tmpX - basePositionX) / (itemSize + itemSpace));
+    int y = floor((tmpY - basePositionY) / (itemSize + itemSpace));
 
-    if (tmpX < basePositionX ||
-        tmpX > basePositionX + (itemSpace * 3) + (itemSize * 4)) {
-        return ccp(-1, -1);
-    }
-    if (tmpY < basePositionY ||
-        tmpY > basePositionY + (itemSpace * 3) + (itemSize * 4)) {
-        return ccp(-1, -1);
-    }
-
-    for (int i = 0; i < itemNum; i++) {
-        float spaceX = basePositionX + (itemSize * (i + 1)) + (itemSpace * i);
-        float spaceY = basePositionY + (itemSize * (i + 1)) + (itemSpace * i);
-        if (tmpX > spaceX && tmpX < spaceX + itemSpace) {
-            return ccp(-1, -1);
-        }
-
-        if (tmpY > spaceY && tmpY < spaceY + itemSpace) {
-            return ccp(-1, -1);
-        }
-    }
     return ccp(x, y);
+}
+
+bool GameScene::isContain(CCPoint position)
+{
+    if (position.x >= 0 && position.x <= 3 && position.y >= 0 && position.y <= 3 ) {
+        return true;
+    }
+    return false;
 }
 
 CCPoint GameScene::setPanelPosition(CCPoint position)
@@ -201,7 +200,6 @@ CCPoint GameScene::setPanelPosition(CCPoint position)
     //ポジションからx, yを求め返戻
     int x = (baseX + (itemSpace * (position.x)) + (itemSize * position.x)) * scaleSize;
     int y = (baseY + (itemSpace * (position.y)) + (itemSize * position.y)) * scaleSize;
-    CCLog("pos : %d, %d", x, y);
 
     return ccp(x, y);
 }
