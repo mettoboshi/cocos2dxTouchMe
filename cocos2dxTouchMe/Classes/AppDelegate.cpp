@@ -4,6 +4,7 @@
 #include "SimpleAudioEngine.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "ScoreScene.h"
 #include "AppData.h"
 
 USING_NS_CC;
@@ -44,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     CCScene *pScene = TitleScene::scene();
-    //CCScene *test = GameScene::scene();
+//    CCScene *pScene = ScoreScene::scene();
     // run
     pDirector->runWithScene(pScene);
 

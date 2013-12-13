@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
 #include "AppData.h"
+#include "ScoreScene.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -73,13 +74,12 @@ bool GameScene::init()
 
     AppData* appData = AppData::getInstance();
 
-    float time = 1.0f;
     if(appData->level == 0) {
-        time = 1.0f;
+        timer = 1.0f;
     } else if(appData->level == 1) {
-        time = 0.5f;
+        timer = 0.5f;
     } else if(appData->level == 2) {
-        time = 0.2f;
+        timer = 0.2f;
     }
     
     gameTime = 0;
@@ -89,11 +89,17 @@ bool GameScene::init()
 
 	// タッチを有効にする
 	this->setTouchEnabled(true);
-    
-    this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
-    this->schedule(schedule_selector(GameScene::gameTimer), time);
+
+    this->scheduleOnce(schedule_selector(GameScene::gameStartTimer), 2);
 
     return true;
+}
+
+void GameScene::gameStartTimer(float time)
+{
+    this->schedule(schedule_selector(GameScene::gameTimer), timer);
+    this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
+    return;
 }
 
 void GameScene::gameEndTimer(float time)
@@ -102,9 +108,16 @@ void GameScene::gameEndTimer(float time)
     
     progressTimer->setPercentage(100.0f - (gameTime * 10));
     
-    if (gameTime >= 10) {
+    if (gameTime >= 2){
         this->pauseSchedulerAndActions();
+        
+        float duration = 0.5f;
+        CCScene* pScene = CCTransitionRotoZoom::create(duration, ScoreScene::scene());
+        
+        // GameSceneへ画面遷移
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }
+    
     return;
 }
 

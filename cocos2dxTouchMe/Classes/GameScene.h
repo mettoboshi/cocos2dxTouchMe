@@ -27,7 +27,8 @@ public:
     const float baseSize = itemSize + itemSpace;
     const int itemNum = 4;
     float scaleSize;
-
+    bool startFlag = false;
+    
     // 背景画像用スプライト
     cocos2d::CCSprite *background;
 
@@ -56,7 +57,9 @@ public:
     cocos2d::CCPoint setPanelPosition(cocos2d::CCPoint position);
 
     //タイマー用
+    float timer = 1.0f;
     float gameTime = 0.0f;
+    void gameStartTimer(float time);
     void gameTimer(float time);
     void gameEndTimer(float time);
     
