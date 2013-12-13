@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE234B7B1847507A00B6C4DB /* AppData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE234B791847507A00B6C4DB /* AppData.cpp */; };
 		BE281A5A182DDEC9001069B7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE281A59182DDEC9001069B7 /* QuartzCore.framework */; };
 		BE281A5C182DDEC9001069B7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE281A5B182DDEC9001069B7 /* OpenGLES.framework */; };
 		BE281A5E182DDEC9001069B7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE281A5D182DDEC9001069B7 /* OpenAL.framework */; };
@@ -295,11 +294,14 @@
 		BEBFA88E1844BE6800BE513A /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA88C1844BE6800BE513A /* libNendAd.a */; };
 		BEBFA8901844BEA300BE513A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA88F1844BEA300BE513A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BEBFA8921844BEB400BE513A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA8911844BEB400BE513A /* Security.framework */; };
+		BEC1D541184B8D11009E8F34 /* ScoreScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEC1D53F184B8D11009E8F34 /* ScoreScene.cpp */; };
+		BEC55A06185B3A9E00392035 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC55A04185B3A9E00392035 /* libNendAd.a */; };
+		BEC55A0C185B3B5B00392035 /* AppData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEC55A0A185B3B5B00392035 /* AppData.cpp */; };
+		BEC55A0F185B3B7B00392035 /* sqliteUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEC55A0D185B3B7B00392035 /* sqliteUtil.cpp */; };
+		BEC5C31C1853C19000A22CF4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE234B791847507A00B6C4DB /* AppData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppData.cpp; sourceTree = "<group>"; };
-		BE234B7A1847507A00B6C4DB /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		BE281A56182DDEC9001069B7 /* cocos2dxTouchMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocos2dxTouchMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE281A59182DDEC9001069B7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BE281A5B182DDEC9001069B7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -907,6 +909,15 @@
 		BEBFA88D1844BE6800BE513A /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NADView.h; path = Classes/iOS/NADView.h; sourceTree = "<group>"; };
 		BEBFA88F1844BEA300BE513A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		BEBFA8911844BEB400BE513A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BEC1D53F184B8D11009E8F34 /* ScoreScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreScene.cpp; path = Classes/ScoreScene.cpp; sourceTree = "<group>"; };
+		BEC1D540184B8D11009E8F34 /* ScoreScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreScene.h; path = Classes/ScoreScene.h; sourceTree = "<group>"; };
+		BEC55A04185B3A9E00392035 /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNendAd.a; sourceTree = "<group>"; };
+		BEC55A05185B3A9E00392035 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADView.h; sourceTree = "<group>"; };
+		BEC55A0A185B3B5B00392035 /* AppData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppData.cpp; path = Classes/AppData.cpp; sourceTree = "<group>"; };
+		BEC55A0B185B3B5B00392035 /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppData.h; path = Classes/AppData.h; sourceTree = "<group>"; };
+		BEC55A0D185B3B7B00392035 /* sqliteUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sqliteUtil.cpp; path = Classes/sqliteUtil.cpp; sourceTree = "<group>"; };
+		BEC55A0E185B3B7B00392035 /* sqliteUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqliteUtil.h; path = Classes/sqliteUtil.h; sourceTree = "<group>"; };
+		BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -914,6 +925,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC5C31C1853C19000A22CF4 /* libsqlite3.0.dylib in Frameworks */,
 				BEBFA8921844BEB400BE513A /* Security.framework in Frameworks */,
 				BEBFA8901844BEA300BE513A /* AdSupport.framework in Frameworks */,
 				BE281A5E182DDEC9001069B7 /* OpenAL.framework in Frameworks */,
@@ -924,6 +936,7 @@
 				BE281A5A182DDEC9001069B7 /* QuartzCore.framework in Frameworks */,
 				BE281A62182DDEC9001069B7 /* AVFoundation.framework in Frameworks */,
 				BE281A68182DDEC9001069B7 /* CoreGraphics.framework in Frameworks */,
+				BEC55A06185B3A9E00392035 /* libNendAd.a in Frameworks */,
 				BE281A5C182DDEC9001069B7 /* OpenGLES.framework in Frameworks */,
 				BE281A66182DDEC9001069B7 /* Foundation.framework in Frameworks */,
 				BE281A60182DDEC9001069B7 /* AudioToolbox.framework in Frameworks */,
@@ -954,6 +967,7 @@
 		BE281A58182DDEC9001069B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */,
 				BEBFA8911844BEB400BE513A /* Security.framework */,
 				BEBFA88F1844BEA300BE513A /* AdSupport.framework */,
 				BE281A59182DDEC9001069B7 /* QuartzCore.framework */,
@@ -971,6 +985,8 @@
 		BE281A69182DDEC9001069B7 /* cocos2dxTouchMe */ = {
 			isa = PBXGroup;
 			children = (
+				BEC55A03185B3A9E00392035 /* iOS */,
+				BEC55A02185B3A7800392035 /* Android */,
 				BE281A6A182DDEC9001069B7 /* Resources */,
 				BE281A82182DDEC9001069B7 /* ios */,
 				BE281A8B182DDEC9001069B7 /* libs */,
@@ -2141,6 +2157,12 @@
 		BE281DFA182DDECE001069B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BEC55A0D185B3B7B00392035 /* sqliteUtil.cpp */,
+				BEC55A0E185B3B7B00392035 /* sqliteUtil.h */,
+				BEC55A0A185B3B5B00392035 /* AppData.cpp */,
+				BEC55A0B185B3B5B00392035 /* AppData.h */,
+				BEC1D53F184B8D11009E8F34 /* ScoreScene.cpp */,
+				BEC1D540184B8D11009E8F34 /* ScoreScene.h */,
 				BEBFA88C1844BE6800BE513A /* libNendAd.a */,
 				BEBFA88D1844BE6800BE513A /* NADView.h */,
 				BEBFA87A184236FB00BE513A /* TitleScene.cpp */,
@@ -2151,10 +2173,26 @@
 				BE281DFC182DDECE001069B7 /* AppDelegate.cpp */,
 				BEBFA8891844BD7B00BE513A /* AdViewManager.h */,
 				BEBFA88A1844BDEA00BE513A /* AdViewManager.mm */,
-				BE234B791847507A00B6C4DB /* AppData.cpp */,
-				BE234B7A1847507A00B6C4DB /* AppData.h */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		BEC55A02185B3A7800392035 /* Android */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Android;
+			path = Classes/Android;
+			sourceTree = "<group>";
+		};
+		BEC55A03185B3A9E00392035 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				BEC55A04185B3A9E00392035 /* libNendAd.a */,
+				BEC55A05185B3A9E00392035 /* NADView.h */,
+			);
+			name = iOS;
+			path = Classes/iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2262,6 +2300,7 @@
 				BE281C3E182DDECB001069B7 /* ioapi.cpp in Sources */,
 				BE281CA9182DDECC001069B7 /* CCBSequence.cpp in Sources */,
 				BE281B56182DDECA001069B7 /* CCTransitionPageTurn.cpp in Sources */,
+				BEC55A0F185B3B7B00392035 /* sqliteUtil.cpp in Sources */,
 				BE281B31182DDECA001069B7 /* ray2.c in Sources */,
 				BE281BB5182DDECB001069B7 /* CCThread.mm in Sources */,
 				BE281CB8182DDECC001069B7 /* CCData.cpp in Sources */,
@@ -2278,6 +2317,7 @@
 				BE281AF8182DDECA001069B7 /* CCDrawNode.cpp in Sources */,
 				BE281BBF182DDECB001069B7 /* platform.cpp in Sources */,
 				BE281C25182DDECB001069B7 /* CCComponentContainer.cpp in Sources */,
+				BEC1D541184B8D11009E8F34 /* ScoreScene.cpp in Sources */,
 				BE281BFF182DDECB001069B7 /* CCSprite.cpp in Sources */,
 				BE281C77182DDECC001069B7 /* CCTouchDispatcher.cpp in Sources */,
 				BE281D7E182DDECD001069B7 /* Skeleton.cpp in Sources */,
@@ -2289,6 +2329,7 @@
 				BE281CB2182DDECC001069B7 /* CCControlButtonLoader.cpp in Sources */,
 				BE281C6F182DDECC001069B7 /* CCTMXXMLParser.cpp in Sources */,
 				BE281CC4182DDECC001069B7 /* CCLayerGradientLoader.cpp in Sources */,
+				BEC55A0C185B3B5B00392035 /* AppData.cpp in Sources */,
 				BE281BF1182DDECB001069B7 /* CCShaderCache.cpp in Sources */,
 				BE281AA4182DDEC9001069B7 /* CCActionInterval.cpp in Sources */,
 				BE281BF9182DDECB001069B7 /* CCAnimation.cpp in Sources */,
@@ -2316,7 +2357,6 @@
 				BE281CA1182DDECC001069B7 /* CCBKeyframe.cpp in Sources */,
 				BE281C44182DDECB001069B7 /* ZipUtils.cpp in Sources */,
 				BE281D49182DDECD001069B7 /* WebSocket.cpp in Sources */,
-				BE234B7B1847507A00B6C4DB /* AppData.cpp in Sources */,
 				BE281AD0182DDEC9001069B7 /* CCArray.cpp in Sources */,
 				BE281C53182DDECC001069B7 /* CCTextureAtlas.cpp in Sources */,
 				BE281B4D182DDECA001069B7 /* CCLayer.cpp in Sources */,
