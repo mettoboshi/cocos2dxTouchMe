@@ -26,24 +26,27 @@ CCScene* ScoreScene::scene()
 // on "init" you need to initialize your instance
 bool ScoreScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
+  //////////////////////////////
+  // 1. super init first
+  if ( !CCLayer::init() )
+  {
+      return false;
+  }
+  
+  // 背景色を変更
+  CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
+  this->addChild(color);
     
-    // 背景色を変更
-    CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
-    this->addChild(color);
-    
-    // 画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
-    cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
-    float screenWidth = pEGLView->getDesignResolutionSize().width;
-    float screenHeight = pEGLView->getDesignResolutionSize().height;
-    scaleSize = screenWidth / 320;
-    
-    // 背景画像の表示
+  // 画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
+  cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
+  float screenWidth = pEGLView->getDesignResolutionSize().width;
+  float screenHeight = pEGLView->getDesignResolutionSize().height;
+  scaleSize = screenWidth / 320;
+  if (screenHeight / screenWidth >= 1.5) {
+    baseSize = 1136.0f - 960.0f;
+  }
+  
+  // 背景画像の表示
 /*
     background = CCSprite::create("background.png");
     background->setPosition(ccp(160 * scaleSize,240 * scaleSize));

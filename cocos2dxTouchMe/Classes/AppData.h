@@ -15,18 +15,25 @@ class AppData
 {
 public:
 
-    enum Level {
-        Easy,
-        Normal,
-        Hard
-    };
-    
-    Level level;
+  enum Level {
+      Easy,
+      Normal,
+      Hard
+  };
+  
+  Level level;
 
-    static AppData* getInstance();
-    
+  static AppData* getInstance();
+  float getScaleHeight(float height);
+  float getScaleWidth(float width);
+  void init();
+  
 private:
-    static AppData* instance;
+  static AppData* instance;
+
+  float scale;
+  float baseHeight;
+
 };
 
 

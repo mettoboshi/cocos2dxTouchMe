@@ -21,7 +21,8 @@ public:
     CREATE_FUNC(TitleScene);
     
     float scaleSize;
-    
+  float baseSize;
+  
     // 背景画像用スプライト
     cocos2d::CCSprite *background;
 

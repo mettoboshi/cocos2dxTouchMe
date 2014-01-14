@@ -10,6 +10,7 @@
 #import "cocos2d.h"
 #import "EAGLView.h"
 #import "AppDelegate.h"
+#import "sqlite3.h"
 
 #import "RootViewController.h"
 
@@ -59,6 +60,46 @@ static AppDelegate s_sharedApplication;
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
 
+   /* Add 20140113 */
+   sqlite3* db;
+  
+   NSString* work_path;
+   NSString* database_filename;
+   
+   NSString* database_path;
+   NSString* template_path;
+   
+   // データベース名
+   database_filename = @"resource.db";
+   
+   NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+   work_path = [paths objectAtIndex:0];
+   
+   // データベースファイルのパスを取得します。
+   database_path = [NSString stringWithFormat:@"%@/%@", work_path, database_filename];
+   
+   // 文書フォルダーにデータベースファイルが存在しているかを確認します。
+   NSFileManager* manager = [NSFileManager defaultManager];
+   
+   if (![manager fileExistsAtPath:database_path]){
+   NSError* error = nil;
+   
+   // 文書フォルダーに存在しない場合は、データベースの複製元をバンドルから取得します。
+   template_path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:database_filename];
+   
+   // バンドルから取得したデータベースファイルを文書フォルダーにコピーします。
+   if (![manager copyItemAtPath:template_path toPath:database_path error:&error])
+   {
+   // データベースファイルのコピーに失敗した場合の処理です。
+   }
+   }
+   
+   // 文書フォルダーに用意されたデータベースファイルを開きます。
+   if (sqlite3_open([database_path UTF8String], &db) == SQLITE_OK){
+   // データベースファイルを SQLite で開くことに成功しました。
+   }
+   /* add end */
+  
     cocos2d::CCApplication::sharedApplication()->run();
     return YES;
 }
@@ -118,7 +159,7 @@ static AppDelegate s_sharedApplication;
 {
     if (!nadView) {
         
-        CGRect frame = CGRectMake(0.f, 430.f, NAD_ADVIEW_SIZE_320x50.width, NAD_ADVIEW_SIZE_320x50.height);
+        CGRect frame = CGRectMake(0.f, 518.f, NAD_ADVIEW_SIZE_320x50.width, NAD_ADVIEW_SIZE_320x50.height);
         
         // NADView の作成
         nadView = [[NADView alloc] initWithFrame:frame];
