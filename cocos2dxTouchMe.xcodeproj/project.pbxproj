@@ -300,6 +300,7 @@
 		BEC55A12185B3DC800392035 /* AdViewManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEC55A11185B3DC800392035 /* AdViewManager.mm */; };
 		BEC55A1618849E4C00392035 /* resource.db in Resources */ = {isa = PBXBuildFile; fileRef = BEC55A1518849E4C00392035 /* resource.db */; };
 		BEC55A181884B0D000392035 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC55A171884B0D000392035 /* Default-568h@2x.png */; };
+		BEC55A1D1885065100392035 /* ready.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC55A1C1885065100392035 /* ready.png */; };
 		BEC5C31C1853C19000A22CF4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */; };
 /* End PBXBuildFile section */
 
@@ -921,6 +922,7 @@
 		BEC55A11185B3DC800392035 /* AdViewManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AdViewManager.mm; path = Classes/AdViewManager.mm; sourceTree = "<group>"; };
 		BEC55A1518849E4C00392035 /* resource.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = resource.db; path = Resources/resource.db; sourceTree = "<group>"; };
 		BEC55A171884B0D000392035 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
+		BEC55A1C1885065100392035 /* ready.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ready.png; path = Resources/ready.png; sourceTree = "<group>"; };
 		BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1003,6 +1005,7 @@
 		BE281A6A182DDEC9001069B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BEC55A1C1885065100392035 /* ready.png */,
 				BEC55A171884B0D000392035 /* Default-568h@2x.png */,
 				BEC55A1518849E4C00392035 /* resource.db */,
 				BEBFA8801843AF6800BE513A /* preference.png */,
@@ -2267,6 +2270,7 @@
 				BE281A72182DDEC9001069B7 /* HelloWorld.png in Resources */,
 				BE281A76182DDEC9001069B7 /* Icon-Small-50.png in Resources */,
 				BE849C371832928800549951 /* touchArea.png in Resources */,
+				BEC55A1D1885065100392035 /* ready.png in Resources */,
 				BE281A80182DDEC9001069B7 /* iTunesArtwork in Resources */,
 				BE281E0C182E4450001069B7 /* highLight.png in Resources */,
 				BEBFA8851843AF6800BE513A /* score.png in Resources */,

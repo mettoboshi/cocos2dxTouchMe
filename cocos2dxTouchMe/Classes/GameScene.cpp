@@ -25,81 +25,90 @@ CCScene* GameScene::scene()
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
+  //////////////////////////////
+  // 1. super init first
+  if ( !CCLayer::init() )
+  {
+      return false;
+  }
+  
+  // 背景色を変更
+  CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
+  this->addChild(color);
+/*
+  // 画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
+  cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
+  scaleSize = pEGLView->getDesignResolutionSize().width / 320;
+*/
+  AppData* appData = AppData::getInstance();
+
+  background = CCSprite::create("background.png");
+  background->setPosition(ccp(appData->getScaleWidth(160),appData->getScaleHeight(240)));
+  this->addChild(background);
+  
+  // 1マス分のスプライトを生成
+  highLight = CCSprite::create("alpha.png");
+  highLight->setPosition(ccp(appData->getScaleWidth(baseX), appData->getScaleHeight(baseY)));
+  this->addChild(highLight);
+
+  // 1マス分のスプライトを生成
+  touchArea = CCSprite::create("alpha.png");
+  touchArea->setPosition(ccp(appData->getScaleWidth(baseX), appData->getScaleHeight(baseY)));
+  this->addChild(touchArea);
+
+  // 得点表示用のラベルを用意
+  score = 0;
+  str = CCString::createWithFormat("Score : %7d", score);
+  scoreLabel = CCLabelTTF::create(str->getCString() , "arial", 40);
+  scoreLabel->setColor(ccc3(0,0,0));
+  scoreLabel->setPosition(ccp(appData->getScaleWidth(230), appData->getScaleHeight(450)));
+  this->addChild(scoreLabel);
+  
+  // プログレスバーを生成
+  progressBar = CCSprite::create("progress-bar.png");
+  progressTimer = CCProgressTimer::create(progressBar);
+  progressTimer->setType(kCCProgressTimerTypeBar);
+  progressTimer->setPercentage(100.0f);
+  progressTimer->setMidpoint(ccp(0.0f, 0.0f));
+  progressTimer->setBarChangeRate(ccp(1.0f, 0.0f));
+  progressTimer->setPosition(ccp(appData->getScaleWidth(150), appData->getScaleHeight(420)));
+  this->addChild(progressTimer);
+
+  //Ready画面の生成
+  readyArea = CCSprite::create("ready.png");
+  readyArea->setPosition(ccp(appData->getScaleWidth(160), appData->getScaleHeight(200)));
+  readyArea->setTag(1);
+  this->addChild(readyArea);
+
+  
+  if(appData->level == 0) {
+      timer = 1.0f;
+  } else if(appData->level == 1) {
+      timer = 0.5f;
+  } else if(appData->level == 2) {
+      timer = 0.2f;
+  }
+  
+  gameTime = 0;
     
-    // 背景色を変更
-    CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
-    this->addChild(color);
-
-    // 画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
-    cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
-    scaleSize = pEGLView->getDesignResolutionSize().width / 320;
-
-    background = CCSprite::create("background.png");
-    background->setPosition(ccp(160 * scaleSize,240 * scaleSize));
-    this->addChild(background);
-    
-    // 1マス分のスプライトを生成
-    highLight = CCSprite::create("alpha.png");
-    highLight->setPosition(ccp(baseX * scaleSize, baseY * scaleSize));
-    this->addChild(highLight);
-
-    // 1マス分のスプライトを生成
-    touchArea = CCSprite::create("alpha.png");
-    touchArea->setPosition(ccp(baseX * scaleSize, baseY * scaleSize));
-    this->addChild(touchArea);
-
-    // 得点表示用のラベルを用意
-    score = 0;
-    str = CCString::createWithFormat("Score : %7d", score);
-    scoreLabel = CCLabelTTF::create(str->getCString() , "arial", 40);
-    scoreLabel->setColor(ccc3(0,0,0));
-    scoreLabel->setPosition(ccp(230 * scaleSize, 450 * scaleSize));
-    this->addChild(scoreLabel);
-    
-    // プログレスバーを生成
-    progressBar = CCSprite::create("progress-bar.png");
-    progressTimer = CCProgressTimer::create(progressBar);
-    progressTimer->setType(kCCProgressTimerTypeBar);
-    progressTimer->setPercentage(100.0f);
-    progressTimer->setMidpoint(ccp(0.0f, 0.0f));
-    progressTimer->setBarChangeRate(ccp(1.0f, 0.0f));
-    progressTimer->setPosition(ccp(150 * scaleSize, 420 * scaleSize));
-    this->addChild(progressTimer);
-
-    AppData* appData = AppData::getInstance();
-
-    if(appData->level == 0) {
-        timer = 1.0f;
-    } else if(appData->level == 1) {
-        timer = 0.5f;
-    } else if(appData->level == 2) {
-        timer = 0.2f;
-    }
-    
-    gameTime = 0;
-    
-    // タッチモードを設定する
-	this->setTouchMode(kCCTouchesOneByOne);
+  // タッチモードを設定する
+  this->setTouchMode(kCCTouchesOneByOne);
 
 	// タッチを有効にする
 	this->setTouchEnabled(true);
 
-    this->scheduleOnce(schedule_selector(GameScene::gameStartTimer), 2);
+  this->scheduleOnce(schedule_selector(GameScene::gameStartTimer), 2);
 
-    return true;
+  return true;
 }
 
 void GameScene::gameStartTimer(float time)
 {
-    this->schedule(schedule_selector(GameScene::gameTimer), timer);
-    this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
-    return;
+  //readyを消す
+  removeChildByTag(1);
+  this->schedule(schedule_selector(GameScene::gameTimer), timer);
+  this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
+  return;
 }
 
 void GameScene::gameEndTimer(float time)
@@ -144,7 +153,6 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     //タッチした座標を取得
     CCPoint location =pTouch->getLocation();
-    
     CCPoint pos = getPanelPosition(location);
     
     if(!isContain(pos)) {
@@ -153,21 +161,21 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     
     //タッチした場所と光っている場所が同じなら得点を加算し、フラグをtrueにする
     if (pos.equals(areaPos) && touchFlag == false) {
-        CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
-        touchArea->setTexture(pTexture);
-        score += 10;
-        str = CCString::createWithFormat("Score : %7d", score);
-        scoreLabel->setString(str->getCString());
-        touchFlag = true;
+      CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
+      touchArea->setTexture(pTexture);
+      score += 10;
+      str = CCString::createWithFormat("Score : %7d", score);
+      scoreLabel->setString(str->getCString());
+      touchFlag = true;
     } else {
-        if (score >= 10) {
-            score -= 10;
-        }
-        
-        //score = max(0, score - 10);
-        
-        str = CCString::createWithFormat("Score : %7d", score);
-        scoreLabel->setString(str->getCString());
+      if (score >= 10) {
+          score -= 10;
+      }
+      
+      //score = max(0, score - 10);
+      
+      str = CCString::createWithFormat("Score : %7d", score);
+      scoreLabel->setString(str->getCString());
     }
 
     CCPoint realPos = setPanelPosition(pos);
@@ -191,13 +199,15 @@ void GameScene::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEv
 
 CCPoint GameScene::getPanelPosition(CCPoint position)
 {
-    //ポジションからx, yを求め返戻
-    float tmpX = position.x / scaleSize;
-    float tmpY = position.y / scaleSize;
-    int x = floor((tmpX - basePositionX) / (itemSize + itemSpace));
-    int y = floor((tmpY - basePositionY) / (itemSize + itemSpace));
+  AppData* appData = AppData::getInstance();
+  
+  //ポジションからx, yを求め返戻
+  float tmpX = position.x / appData->getScale();
+  float tmpY = position.y / appData->getScale();
+  int x = floor((tmpX - basePositionX) / (itemSize + itemSpace));
+  int y = floor((tmpY - basePositionY) / (itemSize + itemSpace));
 
-    return ccp(x, y);
+  return ccp(x, y);
 }
 
 bool GameScene::isContain(CCPoint position)
@@ -210,9 +220,11 @@ bool GameScene::isContain(CCPoint position)
 
 CCPoint GameScene::setPanelPosition(CCPoint position)
 {
-    //ポジションからx, yを求め返戻
-    int x = (baseX + (itemSpace * (position.x)) + (itemSize * position.x)) * scaleSize;
-    int y = (baseY + (itemSpace * (position.y)) + (itemSize * position.y)) * scaleSize;
+  AppData* appData = AppData::getInstance();
+  
+  //ポジションからx, yを求め返戻
+  int x = appData->getScaleWidth((baseX + (itemSpace * (position.x)) + (itemSize * position.x)));
+  int y = appData->getScaleHeight((baseY + (itemSpace * (position.y)) + (itemSize * position.y)));
 
-    return ccp(x, y);
+  return ccp(x, y);
 }

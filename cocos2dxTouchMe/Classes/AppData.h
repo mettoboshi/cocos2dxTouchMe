@@ -27,6 +27,7 @@ public:
   float getScaleHeight(float height);
   float getScaleWidth(float width);
   void init();
+  float getScale();
   
 private:
   static AppData* instance;
