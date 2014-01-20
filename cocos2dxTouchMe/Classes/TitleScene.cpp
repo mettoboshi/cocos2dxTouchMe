@@ -4,6 +4,7 @@
 #include "AdViewManager.h"
 #include "AppData.h"
 #include "sqliteUtil.h"
+#include "ScoreData.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -57,13 +58,18 @@ bool TitleScene::init()
     
   this->addChild(menu);
   AdViewManager::showAdView();
-   
+  
   sqliteUtil* sql;
-  sql->init();
-  sql->doSelect();
-  //sql->doInsert();
-  //sql->createTable();
-  //sql->dbtest();
+  //sql->init();
+  //sql->doSelect(data);
+  int count = sql->doCount();
+  //int i = 0;
+
+  
+  //不要なデータを削除
+  if(count > 20) {
+    sql->doDeleteMinData();
+  }
   
   return true;
 }

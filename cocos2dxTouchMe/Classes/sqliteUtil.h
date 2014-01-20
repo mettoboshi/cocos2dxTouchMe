@@ -12,13 +12,16 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "sqlite3.h"
+#include "ScoreData.h"
 
 class sqliteUtil {
 public:
   bool init();
-  bool doSelect();
-  bool doInsert();
-
+  ScoreData* doSelect(ScoreData* data);
+  bool doInsert(ScoreData data);
+  int doCount();
+  bool doDeleteMinData();
+  
   bool createTable();
   bool dbtest();
   sqlite3 *testDB = NULL;

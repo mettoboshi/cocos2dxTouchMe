@@ -33,6 +33,10 @@ float AppData::getScale() {
   return scale;
 }
 
+float AppData::getBaseHeight() {
+  return baseHeight;
+}
+
 void AppData::init() {
   cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
   float screenWidth = pEGLView->getDesignResolutionSize().width;

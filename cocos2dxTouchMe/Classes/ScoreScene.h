@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "ScoreData.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -29,6 +30,9 @@ public:
   
   float scaleSize;
   float baseSize;
+  
+  ScoreData data[20];
+  int count;
   // 背景画像用スプライト
   cocos2d::CCSprite *background;
 

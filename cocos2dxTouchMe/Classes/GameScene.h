@@ -21,7 +21,7 @@ public:
   const float itemSize = 70.0f;
   const float itemSpace = 10.0f;
   const float basePositionX = 5.0f;
-  const float basePositionY = 85.0f;
+  const float basePositionY = 35.0f;
   const float baseX = (basePositionX + (itemSize / 2));
   const float baseY = (basePositionY + (itemSize / 2));
   const float baseSize = itemSize + itemSpace;

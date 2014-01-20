@@ -2,6 +2,8 @@
 #include "SimpleAudioEngine.h"
 #include "AppData.h"
 #include "ScoreScene.h"
+#include "sqliteUtil.h"
+#include "ScoreData.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -29,23 +31,25 @@ bool GameScene::init()
   // 1. super init first
   if ( !CCLayer::init() )
   {
-      return false;
+    return false;
   }
   
   // 背景色を変更
   CCLayerColor *color = CCLayerColor::create(ccc4(255.0f,255.0f,255.0f,255.0f));
   this->addChild(color);
+
 /*
   // 画面サイズを取得。縦の場合画面サイズの幅は320px か 640pxしかないので、ここから拡大幅を求める。
   cocos2d::CCEGLView* pEGLView = cocos2d::CCEGLView::sharedOpenGLView();
   scaleSize = pEGLView->getDesignResolutionSize().width / 320;
 */
+
   AppData* appData = AppData::getInstance();
 
   background = CCSprite::create("background.png");
-  background->setPosition(ccp(appData->getScaleWidth(160),appData->getScaleHeight(240)));
+  background->setPosition(ccp(appData->getScaleWidth(160),appData->getScaleHeight(190)));
   this->addChild(background);
-  
+
   // 1マス分のスプライトを生成
   highLight = CCSprite::create("alpha.png");
   highLight->setPosition(ccp(appData->getScaleWidth(baseX), appData->getScaleHeight(baseY)));
@@ -61,9 +65,9 @@ bool GameScene::init()
   str = CCString::createWithFormat("Score : %7d", score);
   scoreLabel = CCLabelTTF::create(str->getCString() , "arial", 40);
   scoreLabel->setColor(ccc3(0,0,0));
-  scoreLabel->setPosition(ccp(appData->getScaleWidth(230), appData->getScaleHeight(450)));
+  scoreLabel->setPosition(ccp(appData->getScaleWidth(230), appData->getScaleHeight(400)));
   this->addChild(scoreLabel);
-  
+
   // プログレスバーを生成
   progressBar = CCSprite::create("progress-bar.png");
   progressTimer = CCProgressTimer::create(progressBar);
@@ -71,7 +75,7 @@ bool GameScene::init()
   progressTimer->setPercentage(100.0f);
   progressTimer->setMidpoint(ccp(0.0f, 0.0f));
   progressTimer->setBarChangeRate(ccp(1.0f, 0.0f));
-  progressTimer->setPosition(ccp(appData->getScaleWidth(150), appData->getScaleHeight(420)));
+  progressTimer->setPosition(ccp(appData->getScaleWidth(150), appData->getScaleHeight(370)));
   this->addChild(progressTimer);
 
   //Ready画面の生成
@@ -80,7 +84,6 @@ bool GameScene::init()
   readyArea->setTag(1);
   this->addChild(readyArea);
 
-  
   if(appData->level == 0) {
       timer = 1.0f;
   } else if(appData->level == 1) {
@@ -88,15 +91,14 @@ bool GameScene::init()
   } else if(appData->level == 2) {
       timer = 0.2f;
   }
-  
+
   gameTime = 0;
-    
+
   // タッチモードを設定する
   this->setTouchMode(kCCTouchesOneByOne);
 
 	// タッチを有効にする
 	this->setTouchEnabled(true);
-
   this->scheduleOnce(schedule_selector(GameScene::gameStartTimer), 2);
 
   return true;
@@ -113,77 +115,85 @@ void GameScene::gameStartTimer(float time)
 
 void GameScene::gameEndTimer(float time)
 {
-    gameTime++;
+  gameTime++;
+  progressTimer->setPercentage(100.0f - (gameTime * 10));
+  
+  if (gameTime >= 10){
+    this->pauseSchedulerAndActions();
+
+    AppData* appData = AppData::getInstance();
+    sqliteUtil* sql;
+    ScoreData scoreData;
+    scoreData.id = 0;
+    scoreData.level = appData->level;
+    scoreData.score = score;
     
-    progressTimer->setPercentage(100.0f - (gameTime * 10));
+    sql->doInsert(scoreData);
     
-    if (gameTime >= 2){
-        this->pauseSchedulerAndActions();
-        
-        float duration = 0.5f;
-        CCScene* pScene = CCTransitionRotoZoom::create(duration, ScoreScene::scene());
-        
-        // GameSceneへ画面遷移
-        CCDirector::sharedDirector()->replaceScene(pScene);
-    }
+    float duration = 0.5f;
+    CCScene* pScene = CCTransitionRotoZoom::create(duration, ScoreScene::scene());
     
-    return;
+    // GameSceneへ画面遷移
+    CCDirector::sharedDirector()->replaceScene(pScene);
+  }
+  
+  return;
 }
 
 void GameScene::gameTimer(float time)
 {
-    //初期化
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
-    touchArea->setTexture(pTexture);
-    touchFlag = false;
-    
-    // 0-15の乱数を求める
-    int randNum = arc4random() % 16;
-    
-    // マスに当てはめる
-    areaPos = ccp(floor(randNum / 4), randNum % 4);
-    CCPoint pos = setPanelPosition(areaPos);
-    
-    touchArea->setPosition(pos);
-    pTexture = CCTextureCache::sharedTextureCache()->addImage("touchArea.png");
-    touchArea->setTexture(pTexture);
+  //初期化
+  CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
+  touchArea->setTexture(pTexture);
+  touchFlag = false;
+  
+  // 0-15の乱数を求める
+  int randNum = arc4random() % 16;
+  
+  // マスに当てはめる
+  areaPos = ccp(floor(randNum / 4), randNum % 4);
+  CCPoint pos = setPanelPosition(areaPos);
+  
+  touchArea->setPosition(pos);
+  pTexture = CCTextureCache::sharedTextureCache()->addImage("touchArea.png");
+  touchArea->setTexture(pTexture);
 }
 
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    //タッチした座標を取得
-    CCPoint location =pTouch->getLocation();
-    CCPoint pos = getPanelPosition(location);
+  //タッチした座標を取得
+  CCPoint location =pTouch->getLocation();
+  CCPoint pos = getPanelPosition(location);
+  
+  if(!isContain(pos)) {
+    return false;
+  }
+  
+  //タッチした場所と光っている場所が同じなら得点を加算し、フラグをtrueにする
+  if (pos.equals(areaPos) && touchFlag == false) {
+    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
+    touchArea->setTexture(pTexture);
+    score += 10;
+    str = CCString::createWithFormat("Score : %7d", score);
+    scoreLabel->setString(str->getCString());
+    touchFlag = true;
+  } else {
+    if (score >= 10) {
+        score -= 10;
+  }
     
-    if(!isContain(pos)) {
-        return false;
-    }
+    //score = max(0, score - 10);
     
-    //タッチした場所と光っている場所が同じなら得点を加算し、フラグをtrueにする
-    if (pos.equals(areaPos) && touchFlag == false) {
-      CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
-      touchArea->setTexture(pTexture);
-      score += 10;
-      str = CCString::createWithFormat("Score : %7d", score);
-      scoreLabel->setString(str->getCString());
-      touchFlag = true;
-    } else {
-      if (score >= 10) {
-          score -= 10;
-      }
-      
-      //score = max(0, score - 10);
-      
-      str = CCString::createWithFormat("Score : %7d", score);
-      scoreLabel->setString(str->getCString());
-    }
+    str = CCString::createWithFormat("Score : %7d", score);
+    scoreLabel->setString(str->getCString());
+  }
 
-    CCPoint realPos = setPanelPosition(pos);
-    highLight->setPosition(ccp(realPos.x, realPos.y));
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
-    highLight->setTexture(pTexture);
-    
-    return true;
+  CCPoint realPos = setPanelPosition(pos);
+  highLight->setPosition(ccp(realPos.x, realPos.y));
+  CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
+  highLight->setTexture(pTexture);
+  
+  return true;
 }
 
 void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
@@ -203,10 +213,11 @@ CCPoint GameScene::getPanelPosition(CCPoint position)
   
   //ポジションからx, yを求め返戻
   float tmpX = position.x / appData->getScale();
-  float tmpY = position.y / appData->getScale();
+  float tmpY = (position.y - appData->getBaseHeight()) / appData->getScale();
   int x = floor((tmpX - basePositionX) / (itemSize + itemSpace));
   int y = floor((tmpY - basePositionY) / (itemSize + itemSpace));
-
+  CCLog("x, y : %d, %d", x, y);
+  
   return ccp(x, y);
 }
 
@@ -225,6 +236,5 @@ CCPoint GameScene::setPanelPosition(CCPoint position)
   //ポジションからx, yを求め返戻
   int x = appData->getScaleWidth((baseX + (itemSpace * (position.x)) + (itemSize * position.x)));
   int y = appData->getScaleHeight((baseY + (itemSpace * (position.y)) + (itemSize * position.y)));
-
   return ccp(x, y);
 }

@@ -9,10 +9,12 @@
 #include "sqlite3.h"
 #include "sqliteUtil.h"
 #include "cocos2d.h"
+#include "ScoreData.h"
 
 using namespace cocos2d;
 using namespace std;
 
+/*
 bool sqliteUtil::init() {
   
   sqlite3 *testDB = NULL;
@@ -34,16 +36,15 @@ bool sqliteUtil::init() {
   
   return true;
 }
+*/
 
 int sqliteUtil::dbOpen(sqlite3 **db) {
   std::string path = CCFileUtils::sharedFileUtils()->getWritablePath();
-//  std::string dbname = "Test.db";
-//  CCLog("%s", dbname.c_str());
   path.append("resource.db");
   return sqlite3_open(path.c_str(), db);
 }
 
-bool sqliteUtil::doSelect() {
+ScoreData* sqliteUtil::doSelect(ScoreData* data) {
   sqlite3 *testDB = NULL;
   char* errMsg = NULL;
 
@@ -53,50 +54,129 @@ bool sqliteUtil::doSelect() {
   result = dbOpen(&testDB);
 
   //select
-  sqlstr="select * from MyTable_1 order by id desc";
+  sqlstr="select * from score order by score desc limit 20";
   sqlite3_stmt *stmt = NULL;
   
   result = sqlite3_prepare_v2(testDB, sqlstr.c_str(), -1, &stmt, NULL);
 
-  while (sqlite3_step(stmt) == SQLITE_ROW) {
-    int id = (int)sqlite3_column_int(stmt, 0);
-    const char* name = (char*)sqlite3_column_text(stmt, 1);
+  int i = 0;
+  while (sqlite3_step(stmt) == SQLITE_ROW && i < 20) {
+    data[i].id = (int)sqlite3_column_int(stmt, 0);
+    data[i].level = (int)sqlite3_column_int(stmt, 1);
+    data[i].score = (int)sqlite3_column_int(stmt, 2);
     
-    //        int lastNodeId = (int)sqlite3_column_int(stmt, 1);
-    //        char* test = (char *)sqlite3_column_text(stmt, 2);
+    // int lastNodeId = (int)sqlite3_column_int(stmt, 1);
+    // char* test = (char *)sqlite3_column_text(stmt, 2);
     
-    CCLog("%d, %s",id, name);
+    CCLog("%d, %d, %d",data[i].id, data[i].level, data[i].score);
+    i++;
   }
   
   sqlite3_reset(stmt);
   sqlite3_finalize(stmt);
   sqlite3_close(testDB);
   
+  return data;
+}
+
+int sqliteUtil::doCount() {
+  sqlite3 *db = NULL;
+  char* errMsg = NULL;
+  
+  string sqlstr;
+  int result;
+  int count;
+  
+  result = dbOpen(&db);
+  
+  //select
+  sqlstr="select count(*) from score order by score desc limit 20";
+  sqlite3_stmt *stmt = NULL;
+  
+  result = sqlite3_prepare_v2(db, sqlstr.c_str(), -1, &stmt, NULL);
+  
+  while (sqlite3_step(stmt) == SQLITE_ROW) {
+    count = (int)sqlite3_column_int(stmt, 0);
+  }
+  
+  CCLog("count : %d", count);
+
+  sqlite3_reset(stmt);
+  sqlite3_finalize(stmt);
+  sqlite3_close(db);
+  
+  return count;
+}
+
+bool sqliteUtil::doDeleteMinData() {
+  sqlite3 *db = NULL;
+  char* errMsg = NULL;
+  
+  string sqlstr;
+  string deletesqlstr;
+  int result;
+  int minScore;
+  
+  result = dbOpen(&db);
+
+  sqlstr="select score from score order by score desc limit 20, 1";
+  sqlite3_stmt *stmt = NULL;
+  
+  result = sqlite3_prepare_v2(db, sqlstr.c_str(), -1, &stmt, NULL);
+  
+  while (sqlite3_step(stmt) == SQLITE_ROW) {
+    minScore = (int)sqlite3_column_int(stmt, 0);
+    CCLog("minscore : %d", minScore);
+  }
+  
+  sqlite3_stmt *stmtDelete = NULL;
+  stringstream ss;
+  ss << "delete from score where score < " << minScore;
+  deletesqlstr= ss.str();
+
+  CCLog("%s", deletesqlstr.c_str());
+  result = sqlite3_prepare_v2(db, deletesqlstr.c_str(), -1, &stmtDelete, NULL);
+
+  if(SQLITE_DONE == sqlite3_step(stmtDelete)) {
+    sqlite3_finalize(stmtDelete);
+  }
+  
+  sqlite3_reset(stmt);
+  sqlite3_close(db);
+
   return true;
 }
 
-bool sqliteUtil::doInsert() {
-  sqlite3 *testDB = NULL;
+
+bool sqliteUtil::doInsert(ScoreData data) {
+  sqlite3 *db = NULL;
   char* errMsg = NULL;
   
   string sqlstr;
   int result;
   
-  result = dbOpen(&testDB);
+  result = dbOpen(&db);
 
   //insert
-  sqlstr="insert into MyTable_1( name ) values ( 'いちご' ) ";
-  result = sqlite3_exec( testDB, sqlstr.c_str() , NULL, NULL, &errMsg );
+  //sqlstr="insert into MyTable_1( name ) values ( 'いちご' ) ";
+  stringstream ss;
+  sqlstr="insert into score( LEVEL, SCORE ) values (";
+  CCLog("insertmae :%d, %d",data.level, data.score);
+  ss << "insert into score( LEVEL, SCORE ) values (" << data.level << "," << data.score << ")";
+  sqlstr = ss.str();
+  result = sqlite3_exec( db, sqlstr.c_str() , NULL, NULL, &errMsg );
 
   if(result != SQLITE_OK ) {
     CCLog( "失敗　:%d ，原因:%s\n" , result, errMsg );
   }
   
+  sqlite3_close(db);
+
   return true;
 }
 
 
-bool sqliteUtil::createTable() {
+/*bool sqliteUtil::createTable() {
   //sqlite3のテスト
   sqlite3 *db = NULL;
   char* errMsg = NULL;
@@ -125,6 +205,7 @@ bool sqliteUtil::createTable() {
   return true;
 }
 
+ 
 bool sqliteUtil::dbtest() {
 
     //sqlite3のテスト
@@ -192,3 +273,4 @@ bool sqliteUtil::dbtest() {
 
     return true;
 }
+*/

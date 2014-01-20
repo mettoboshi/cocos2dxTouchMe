@@ -3,6 +3,9 @@
 #include "AppData.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "ScoreScene.h"
+#include "sqliteUtil.h"
+#include <string>
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -12,7 +15,7 @@ CCScene* ScoreScene::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
-    
+
     // 'layer' is an autorelease object
     ScoreScene *layer = ScoreScene::create();
     
@@ -57,26 +60,37 @@ bool ScoreScene::init()
     this->addChild(background);
 */
     
-    // CCMenu
-    CCMenuItemImage *startItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(ScoreScene::forTitle));
-    CCMenuItemImage *retryItem = CCMenuItemImage::create("score.png", "score.png",this,menu_selector(ScoreScene::forRetry));
+  // CCMenu
+  CCMenuItemImage *startItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(ScoreScene::forTitle));
+  CCMenuItemImage *retryItem = CCMenuItemImage::create("score.png", "score.png",this,menu_selector(ScoreScene::forRetry));
 
-    CCMenu* menu = CCMenu::create(retryItem, startItem, NULL);
-    menu->setPosition(ccp(appData->getScaleWidth(160), appData->getScaleHeight(20)));
-    menu->alignItemsHorizontallyWithPadding(50.0f);
-    
-    this->addChild(menu);
+  CCMenu* menu = CCMenu::create(retryItem, startItem, NULL);
+  menu->setPosition(ccp(appData->getScaleWidth(160), appData->getScaleHeight(20)));
+  menu->alignItemsHorizontallyWithPadding(50.0f);
+  
+  this->addChild(menu);
 
-    CCTableView* tableView = CCTableView::create(this, CCSizeMake(screenWidth, screenHeight - appData->getScaleWidth(200)));
-    tableView->setDirection(kCCScrollViewDirectionVertical);
-    tableView->setVerticalFillOrder(kCCTableViewFillTopDown);
-    tableView->setPosition(ccp(0, appData->getScaleHeight(50)));
-    tableView->setDelegate(this);
-    
-    this->addChild(tableView);
+  //Scoreを取得
+  sqliteUtil* sql;
+  count = sql->doCount();
+  sql->doSelect(data);
+  
+/*
+  for (int i = 0; i < count; i++) {
+    CCLog("score-select %d, %d, %d, %d", data[i].id, data[i].level, data[i].score, i);
+  }
+*/
+
+  CCTableView* tableView = CCTableView::create(this, CCSizeMake(screenWidth, screenHeight - appData->getScaleWidth(200)));
+  tableView->setDirection(kCCScrollViewDirectionVertical);
+  tableView->setVerticalFillOrder(kCCTableViewFillTopDown);
+  tableView->setPosition(ccp(0, appData->getScaleHeight(50)));
+  tableView->setDelegate(this);
+  
+  this->addChild(tableView);
 //    tableView->reloadData();
-    
-    return true;
+  
+  return true;
 }
 
 void ScoreScene::tableCellTouched(CCTableView* table, CCTableViewCell* cell){
@@ -89,13 +103,25 @@ CCSize ScoreScene::cellSizeForTable(CCTableView* table){
 
 CCTableViewCell* ScoreScene::tableCellAtIndex(CCTableView* table, unsigned int idx){
   AppData* appData = AppData::getInstance();
-  CCString * string = CCString::createWithFormat("%i行目", idx + 1);
-    
+
+  CCString* tableStr = CCString::create("");
+  string str = "";
+  if (idx < count) {
+    if (data[idx].level == 0) {
+      str = "Easy";
+    } else if(data[idx].level == 1) {
+      str = "Nomal";
+    } else if(data[idx].level == 2) {
+      str = "Hard";
+    }
+    tableStr = CCString::createWithFormat("%i : Level %s Score %d", idx + 1, str.c_str(), data[idx].score);
+  }
+  
   CCTableViewCell* cell = table->dequeueCell();
   cell = new CCTableViewCell();
   cell->autorelease();
   
-  CCLabelTTF* label = CCLabelTTF::create(string->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(20));
+  CCLabelTTF* label = CCLabelTTF::create(tableStr->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
   label->setAnchorPoint(ccp(0, 0));
   label->setPosition(ccp(appData->getScaleWidth(20), 0));
   label->setColor(ccc3(0, 0, 0));

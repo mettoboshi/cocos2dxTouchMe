@@ -301,6 +301,7 @@
 		BEC55A1618849E4C00392035 /* resource.db in Resources */ = {isa = PBXBuildFile; fileRef = BEC55A1518849E4C00392035 /* resource.db */; };
 		BEC55A181884B0D000392035 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC55A171884B0D000392035 /* Default-568h@2x.png */; };
 		BEC55A1D1885065100392035 /* ready.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC55A1C1885065100392035 /* ready.png */; };
+		BEC55A26188959E200392035 /* ScoreData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEC55A24188959E200392035 /* ScoreData.cpp */; };
 		BEC5C31C1853C19000A22CF4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */; };
 /* End PBXBuildFile section */
 
@@ -923,6 +924,8 @@
 		BEC55A1518849E4C00392035 /* resource.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = resource.db; path = Resources/resource.db; sourceTree = "<group>"; };
 		BEC55A171884B0D000392035 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		BEC55A1C1885065100392035 /* ready.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ready.png; path = Resources/ready.png; sourceTree = "<group>"; };
+		BEC55A24188959E200392035 /* ScoreData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreData.cpp; sourceTree = "<group>"; };
+		BEC55A25188959E200392035 /* ScoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreData.h; sourceTree = "<group>"; };
 		BEC5C31B1853C19000A22CF4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -2182,6 +2185,8 @@
 				BE281E07182E136D001069B7 /* GameScene.h */,
 				BE281DFB182DDECE001069B7 /* AppDelegate.h */,
 				BE281DFC182DDECE001069B7 /* AppDelegate.cpp */,
+				BEC55A24188959E200392035 /* ScoreData.cpp */,
+				BEC55A25188959E200392035 /* ScoreData.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -2473,6 +2478,7 @@
 				BE281C18182DDECB001069B7 /* ccUTF8.cpp in Sources */,
 				BE281B46182DDECA001069B7 /* CCLabelBMFont.cpp in Sources */,
 				BE281ABA182DDEC9001069B7 /* CCNode.cpp in Sources */,
+				BEC55A26188959E200392035 /* ScoreData.cpp in Sources */,
 				BE281AC9182DDEC9001069B7 /* CCScheduler.cpp in Sources */,
 				BE281B94182DDECA001069B7 /* AccelerometerDelegateWrapper.mm in Sources */,
 				BE281DC3182DDECE001069B7 /* cpPinJoint.c in Sources */,
