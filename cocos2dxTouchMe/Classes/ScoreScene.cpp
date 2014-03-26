@@ -104,7 +104,10 @@ CCSize ScoreScene::cellSizeForTable(CCTableView* table){
 CCTableViewCell* ScoreScene::tableCellAtIndex(CCTableView* table, unsigned int idx){
   AppData* appData = AppData::getInstance();
 
-  CCString* tableStr = CCString::create("");
+  CCString* tableStrNo = CCString::create("");
+  CCString* tableStrLevel = CCString::create("");
+  CCString* tableStrScore = CCString::create("");
+  
   string str = "";
   if (idx < count) {
     if (data[idx].level == 0) {
@@ -114,20 +117,37 @@ CCTableViewCell* ScoreScene::tableCellAtIndex(CCTableView* table, unsigned int i
     } else if(data[idx].level == 2) {
       str = "Hard";
     }
-    tableStr = CCString::createWithFormat("%i : Level %s Score %d", idx + 1, str.c_str(), data[idx].score);
+    tableStrNo = CCString::createWithFormat("%2i", idx + 1);
+    tableStrLevel = CCString::createWithFormat(": (Level) %6s", str.c_str());
+    tableStrScore = CCString::createWithFormat("(Score) %3d", data[idx].score);
   }
   
   CCTableViewCell* cell = table->dequeueCell();
   cell = new CCTableViewCell();
   cell->autorelease();
   
-  CCLabelTTF* label = CCLabelTTF::create(tableStr->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
-  label->setAnchorPoint(ccp(0, 0));
-  label->setPosition(ccp(appData->getScaleWidth(20), 0));
-  label->setColor(ccc3(0, 0, 0));
-
+  CCLabelTTF* labelNo = CCLabelTTF::create(tableStrNo->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
+  labelNo->setAnchorPoint(ccp(0, 0));
+  labelNo->setPosition(ccp(appData->getScaleWidth(20), 0));
+  labelNo->setColor(ccc3(0, 0, 0));
   //label->setHorizontalAlignment(kCCTextAlignmentLeft);
-  cell->addChild(label);
+  cell->addChild(labelNo);
+
+  CCLabelTTF* labelScore = CCLabelTTF::create(tableStrScore->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
+  labelScore->setAnchorPoint(ccp(0, 0));
+  labelScore->setPosition(ccp(appData->getScaleWidth(50), 0));
+  labelScore->setColor(ccc3(0, 0, 0));
+  //label->setHorizontalAlignment(kCCTextAlignmentLeft);
+  cell->addChild(labelScore);
+
+  CCLabelTTF* labelLevel = CCLabelTTF::create(tableStrLevel->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
+  labelLevel->setAnchorPoint(ccp(0, 0));
+  labelLevel->setPosition(ccp(appData->getScaleWidth(160), 0));
+  labelLevel->setColor(ccc3(0, 0, 0));
+  //label->setHorizontalAlignment(kCCTextAlignmentLeft);
+  cell->addChild(labelLevel);
+  
+
   return cell;
 }
 
