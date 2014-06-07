@@ -29,6 +29,7 @@ public:
   void easyStart();
   void nomalStart();
   void hardStart();
+  void scoreMove();
   
 };
 

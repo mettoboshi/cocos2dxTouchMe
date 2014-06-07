@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "SimpleAudioEngine.h"
 #include "GameScene.h"
+#include "ScoreScene.h"
 #include "AdViewManager.h"
 #include "AppData.h"
 #include "sqliteUtil.h"
@@ -48,13 +49,14 @@ bool TitleScene::init()
   this->addChild(background);
 
   // CCMenu
-  CCMenuItemImage *easyStartItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::easyStart));
-  CCMenuItemImage *normalStartItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::nomalStart));
-  CCMenuItemImage *hardStartItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(TitleScene::hardStart));
-
-  CCMenu* menu = CCMenu::create(easyStartItem, normalStartItem, hardStartItem, NULL);
+  CCMenuItemImage *easyStartItem = CCMenuItemImage::create("eazy.png", "eazy.png",this,menu_selector(TitleScene::easyStart));
+  CCMenuItemImage *normalStartItem = CCMenuItemImage::create("normal.png", "normal.png",this,menu_selector(TitleScene::nomalStart));
+  CCMenuItemImage *hardStartItem = CCMenuItemImage::create("hard.png", "hard.png",this,menu_selector(TitleScene::hardStart));
+  CCMenuItemImage *scoreItem = CCMenuItemImage::create("score.png", "score.png",this,menu_selector(TitleScene::scoreMove));
+  
+  CCMenu* menu = CCMenu::create(easyStartItem, normalStartItem, hardStartItem, scoreItem, NULL);
   menu->alignItemsVerticallyWithPadding(appData->getScaleWidth(20.0f));
-  menu->setPosition(ccp(appData->getScaleWidth(160.0f), appData->getScaleHeight(180.0f)));
+  menu->setPosition(ccp(appData->getScaleWidth(160.0f), appData->getScaleHeight(160.0f)));
     
   this->addChild(menu);
   AdViewManager::showAdView();
@@ -119,3 +121,15 @@ void TitleScene::hardStart() {
   
   return;
 }
+
+void TitleScene::scoreMove() {
+  
+  float duration = 0.5f;
+  CCScene* pScene = CCTransitionPageTurn::create(duration, ScoreScene::scene(), false);
+  
+  // GameSceneへ画面遷移
+  CCDirector::sharedDirector()->replaceScene(pScene);
+  
+  return;
+}
+
