@@ -9,6 +9,25 @@
 #ifndef __cocos2dxTouchMe__sqliteUtil__
 #define __cocos2dxTouchMe__sqliteUtil__
 
-#include <iostream>
+#include "cocos2d.h"
+#include "cocos-ext.h"
+#include "sqlite3.h"
+#include "ScoreData.h"
+
+class sqliteUtil {
+public:
+  bool init();
+  ScoreData* doSelect(ScoreData* data);
+  bool doInsert(ScoreData data);
+  int doCount();
+  bool doDeleteMinData();
+  
+  bool createTable();
+  bool dbtest();
+  sqlite3 *testDB = NULL;
+  char* errMsg = NULL;
+private:
+  int dbOpen(sqlite3** db);
+};
 
 #endif /* defined(__cocos2dxTouchMe__sqliteUtil__) */

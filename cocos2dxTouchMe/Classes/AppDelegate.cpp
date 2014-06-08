@@ -20,35 +20,34 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    CCEGLView *pEGLView = CCEGLView::sharedOpenGLView();
+  // initialize director
+  CCDirector *pDirector = CCDirector::sharedDirector();
+  CCEGLView *pEGLView = CCEGLView::sharedOpenGLView();
     
 	//画面サイズを取得するためにCCEGLViewを作成
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+  pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-    // turn on display FPS
-    pDirector->setDisplayStats(true);
+  // turn on display FPS
+  pDirector->setDisplayStats(true);
 
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+  // set FPS. the default value is 1.0/60 if you don't call this
+  pDirector->setAnimationInterval(1.0 / 60);
 
-    CCSize frameSize = pEGLView->getFrameSize();
+  CCSize frameSize = pEGLView->getFrameSize();
 
 
-    // 4inch対応
-    if (frameSize.height / frameSize.width > 1.5) {
-        pEGLView->setDesignResolutionSize(640.0f, 1136.0f, kResolutionNoBorder);
-    } else {
-        pEGLView->setDesignResolutionSize(640.0f, 960.0f, kResolutionNoBorder);
-    }
+  // 4inch対応
+  if (frameSize.height / frameSize.width >= 1.5) {
+      pEGLView->setDesignResolutionSize(640.0f, 1136.0f, kResolutionNoBorder);
+  } else {
+      pEGLView->setDesignResolutionSize(640.0f, 960.0f, kResolutionNoBorder);
+  }
 
-    // create a scene. it's an autorelease object
-    CCScene *pScene = TitleScene::scene();
-//    CCScene *pScene = ScoreScene::scene();
-    // run
-    pDirector->runWithScene(pScene);
-
+  // create a scene. it's an autorelease object
+  CCScene *pScene = TitleScene::scene();
+//  CCScene *pScene = ScoreScene::scene();
+  // run
+  pDirector->runWithScene(pScene);
 
     return true;
 }
