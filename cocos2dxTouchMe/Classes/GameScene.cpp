@@ -68,6 +68,15 @@ bool GameScene::init()
   scoreLabel->setPosition(ccp(appData->getScaleWidth(230), appData->getScaleHeight(400)));
   this->addChild(scoreLabel);
 
+  // コンボ数のラベルを用意
+  combo = 0;
+  comboStr = CCString::createWithFormat("%3d Hit", combo);
+  comboLabel = CCLabelTTF::create(comboStr->getCString() , "arial", 40);
+  comboLabel->setColor(ccc3(0,0,0));
+  comboLabel->setPosition(ccp(appData->getScaleWidth(50), appData->getScaleHeight(400)));
+  this->addChild(comboLabel);
+
+  
   // プログレスバーを生成
   progressBar = CCSprite::create("progress-bar.png");
   progressTimer = CCProgressTimer::create(progressBar);
@@ -84,12 +93,22 @@ bool GameScene::init()
   readyArea->setTag(1);
   this->addChild(readyArea);
 
+  //効果音の読み込み
+  SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
+  SimpleAudioEngine::sharedEngine()->preloadEffect("rare.mp3");
+  SimpleAudioEngine::sharedEngine()->preloadEffect("touch.mp3");
+  SimpleAudioEngine::sharedEngine()->preloadEffect("speedUp.mp3");
+  SimpleAudioEngine::sharedEngine()->preloadEffect("speedDown.mp3");
+  
   if(appData->level == 0) {
-      timer = 1.0f;
+    baseTimer = 1.0f;
+    timer = 1.0f;
   } else if(appData->level == 1) {
-      timer = 0.5f;
+    baseTimer = 0.5f;
+    timer = 0.5f;
   } else if(appData->level == 2) {
-      timer = 0.2f;
+    baseTimer = 0.5f;
+    timer = 0.3f;
   }
 
   gameTime = 0;
@@ -108,7 +127,7 @@ void GameScene::gameStartTimer(float time)
 {
   //readyを消す
   removeChildByTag(1);
-  this->schedule(schedule_selector(GameScene::gameTimer), timer);
+  this->schedule(schedule_selector(GameScene::gameTimer), 0.1);
   this->schedule(schedule_selector(GameScene::gameEndTimer), 1);
   return;
 }
@@ -142,6 +161,12 @@ void GameScene::gameEndTimer(float time)
 
 void GameScene::gameTimer(float time)
 {
+  nowTime += time;
+  if (nowTime < timer) {
+    return;
+  }
+ 
+  nowTime = 0.0f;
   //初期化
   CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
   touchArea->setTexture(pTexture);
@@ -150,12 +175,25 @@ void GameScene::gameTimer(float time)
   // 0-15の乱数を求める
   int randNum = arc4random() % 16;
   
+  // Cookieの種類を変えられるようにする 0-1 : timePlus, 2-3 : speedPlus, 4-10 : other
+  int cookieNum = arc4random() % 10;
+  
+  
   // マスに当てはめる
   areaPos = ccp(floor(randNum / 4), randNum % 4);
   CCPoint pos = setPanelPosition(areaPos);
   
   touchArea->setPosition(pos);
-  pTexture = CCTextureCache::sharedTextureCache()->addImage("touchArea.png");
+  if (cookieNum < 2) {
+    pTexture = CCTextureCache::sharedTextureCache()->addImage("scorePlus.png");
+    cookieCategory = 1;
+  } else if (cookieNum >= 2 && cookieNum < 4) {
+    pTexture = CCTextureCache::sharedTextureCache()->addImage("timePlus.png");
+    cookieCategory = 2;
+  } else {
+    pTexture = CCTextureCache::sharedTextureCache()->addImage("cookie.png");
+    cookieCategory = 0;
+  }
   touchArea->setTexture(pTexture);
 }
 
@@ -173,24 +211,64 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
   if (pos.equals(areaPos) && touchFlag == false) {
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("alpha.png");
     touchArea->setTexture(pTexture);
-    score += 10;
+
+    int SoundID;
+    if (cookieCategory == 0) {
+      score += 10;
+    } else if (cookieCategory == 1) {
+      score += 50;
+    } else if (cookieCategory == 2) {
+      score += 10;
+      gameTime -= 2;
+    } else {
+      score += 10;
+    }
+    combo++;
+    
+    if (combo % 5 == 0 && combo != 0) {
+      timer -= 0.2;
+      SoundID = SimpleAudioEngine::sharedEngine()->playEffect("speedUp.mp3");
+    } else if (cookieCategory == 0) {
+      SoundID = SimpleAudioEngine::sharedEngine()->playEffect("touch.mp3");
+    } else if (cookieCategory == 1) {
+      SoundID = SimpleAudioEngine::sharedEngine()->playEffect("rare.mp3");
+    } else if (cookieCategory == 2) {
+      SoundID = SimpleAudioEngine::sharedEngine()->playEffect("rare.mp3");
+    }
+    
     str = CCString::createWithFormat("Score : %7d", score);
     scoreLabel->setString(str->getCString());
+
+    comboStr = CCString::createWithFormat("%3d HiT", combo);
+    comboLabel->setString(comboStr->getCString());
+    
     touchFlag = true;
   } else {
     if (score >= 10) {
-        score -= 10;
-  }
+      //score -= 10;
+    }
+
+    if (timer < baseTimer) {
+      timer += 0.1f;
+      int SoundID;
+      SoundID = SimpleAudioEngine::sharedEngine()->playEffect("speedDown.mp3");
+    }
+    combo = 0;
+    
     
     //score = max(0, score - 10);
     
     str = CCString::createWithFormat("Score : %7d", score);
     scoreLabel->setString(str->getCString());
+
+    comboStr = CCString::createWithFormat("%3d HiT", combo);
+    comboLabel->setString(comboStr->getCString());
+
   }
 
   CCPoint realPos = setPanelPosition(pos);
   highLight->setPosition(ccp(realPos.x, realPos.y));
-  CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highLight.png");
+  CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage("highlight.png");
   highLight->setTexture(pTexture);
   
   return true;

@@ -45,7 +45,7 @@ bool TitleScene::init()
   
   // 背景画像の表示
   background = CCSprite::create("background.png");
-  background->setPosition(ccp(appData->getScaleWidth(160.0f),appData->getScaleHeight(240.0f)));
+  background->setPosition(ccp(appData->getScaleWidth(160.0f),appData->getScaleHeight(160.0f)));
   this->addChild(background);
 
   // CCMenu

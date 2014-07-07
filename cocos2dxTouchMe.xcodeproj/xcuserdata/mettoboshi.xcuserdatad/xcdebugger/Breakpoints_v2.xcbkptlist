@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "cocos2dxTouchMe/Classes/GameScene.cpp"
-            timestampString = "411753161.760418"
+            timestampString = "426231984.288255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "GameScene::getPanelPosition(CCPoint position)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "cocos2dxTouchMe/Classes/GameScene.cpp"
-            timestampString = "411753161.760418"
+            timestampString = "426231984.288255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "GameScene::getPanelPosition(CCPoint position)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "cocos2dxTouchMe/Classes/GameScene.cpp"
-            timestampString = "411753161.760418"
+            timestampString = "426231779.283893"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "GameScene::gameEndTimer(float time)"
             landmarkType = "5">
          </BreakpointContent>

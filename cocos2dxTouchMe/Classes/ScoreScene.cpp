@@ -61,12 +61,12 @@ bool ScoreScene::init()
 */
     
   // CCMenu
-  CCMenuItemImage *startItem = CCMenuItemImage::create("start.png", "start.png",this,menu_selector(ScoreScene::forTitle));
-  CCMenuItemImage *retryItem = CCMenuItemImage::create("score.png", "score.png",this,menu_selector(ScoreScene::forRetry));
-
+  CCMenuItemImage *retryItem = CCMenuItemImage::create("retry.png", "retry.png",this,menu_selector(ScoreScene::forRetry));
+  CCMenuItemImage *startItem = CCMenuItemImage::create("top.png", "top.png",this,menu_selector(ScoreScene::forTitle));
+  
   CCMenu* menu = CCMenu::create(retryItem, startItem, NULL);
   menu->setPosition(ccp(appData->getScaleWidth(160), appData->getScaleHeight(20)));
-  menu->alignItemsHorizontallyWithPadding(50.0f);
+  menu->alignItemsHorizontallyWithPadding(0.0f);
   
   this->addChild(menu);
 
@@ -117,14 +117,29 @@ CCTableViewCell* ScoreScene::tableCellAtIndex(CCTableView* table, unsigned int i
     } else if(data[idx].level == 2) {
       str = "Hard";
     }
-    tableStrNo = CCString::createWithFormat("%2i", idx + 1);
-    tableStrLevel = CCString::createWithFormat(": (Level) %6s", str.c_str());
-    tableStrScore = CCString::createWithFormat("(Score) %3d", data[idx].score);
+    tableStrNo = CCString::createWithFormat("%2i : ", idx + 1);
+    tableStrLevel = CCString::createWithFormat("( %s ) ", str.c_str());
+    tableStrScore = CCString::createWithFormat(" %6d ", data[idx].score);
   }
   
   CCTableViewCell* cell = table->dequeueCell();
   cell = new CCTableViewCell();
   cell->autorelease();
+
+  
+  // セルの背景は交互に色を変更する
+  ccColor3B background_color = ccc3(255,255,255);
+  if (idx%2) {
+    background_color = ccc3(200,200,200);
+  }
+  CCSprite* bg = CCSprite::create();
+  bg->setAnchorPoint(CCPoint(0, 0));
+  bg->setTextureRect(CCRect(0, 0, appData->getScaleWidth(320), appData->getScaleWidth(20)));
+  bg->setColor(background_color);
+  bg->setTag(100);
+  cell->addChild(bg);
+
+  
   
   CCLabelTTF* labelNo = CCLabelTTF::create(tableStrNo->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
   labelNo->setAnchorPoint(ccp(0, 0));
@@ -135,17 +150,24 @@ CCTableViewCell* ScoreScene::tableCellAtIndex(CCTableView* table, unsigned int i
 
   CCLabelTTF* labelScore = CCLabelTTF::create(tableStrScore->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
   labelScore->setAnchorPoint(ccp(0, 0));
-  labelScore->setPosition(ccp(appData->getScaleWidth(50), 0));
+  labelScore->setPosition(ccp(appData->getScaleWidth(70), 0));
   labelScore->setColor(ccc3(0, 0, 0));
   //label->setHorizontalAlignment(kCCTextAlignmentLeft);
   cell->addChild(labelScore);
 
   CCLabelTTF* labelLevel = CCLabelTTF::create(tableStrLevel->getCString(), "Hiragino Kaku Gothic ProN", appData->getScaleWidth(18));
   labelLevel->setAnchorPoint(ccp(0, 0));
-  labelLevel->setPosition(ccp(appData->getScaleWidth(160), 0));
+  labelLevel->setPosition(ccp(appData->getScaleWidth(200), 0));
   labelLevel->setColor(ccc3(0, 0, 0));
   //label->setHorizontalAlignment(kCCTextAlignmentLeft);
   cell->addChild(labelLevel);
+  
+  // ボーダーライン
+  CCSprite* line = CCSprite::create();
+  line->setAnchorPoint(CCPoint(0, 0));
+  line->setTextureRect(CCRect(0, 0, appData->getScaleWidth(320), 1));
+  line->setColor(ccc3(0,0,0));
+  cell->addChild(line);
   
 
   return cell;

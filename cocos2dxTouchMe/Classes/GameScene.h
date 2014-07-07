@@ -46,6 +46,8 @@ public:
   // readyエリア表示用のスプライト
   cocos2d::CCSprite *readyArea;
 
+  // 表示用cookie種別
+  int cookieCategory = 0;
   
   // タッチ可否フラグ
   bool touchFlag = false;
@@ -61,16 +63,23 @@ public:
   cocos2d::CCPoint setPanelPosition(cocos2d::CCPoint position);
 
   //タイマー用
+  float baseTimer = 1.0f;
   float timer = 1.0f;
   float gameTime = 0.0f;
   void gameStartTimer(float time);
   void gameTimer(float time);
   void gameEndTimer(float time);
+  float nowTime = 0.0f;
   
   //得点表示用変数
   cocos2d::CCLabelTTF *scoreLabel;
   int score = 0;
   cocos2d::CCString *str;
+ 
+  //コンボ数
+  cocos2d::CCLabelTTF *comboLabel;
+  cocos2d::CCString *comboStr;
+  int combo = 0;
     
 };
 
