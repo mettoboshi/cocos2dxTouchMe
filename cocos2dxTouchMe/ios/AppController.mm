@@ -74,7 +74,9 @@ static AppDelegate s_sharedApplication;
    
    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
    work_path = [paths objectAtIndex:0];
-   
+  
+  NSLog(@"work_path = %@", work_path);
+  
    // データベースファイルのパスを取得します。
    database_path = [NSString stringWithFormat:@"%@/%@", work_path, database_filename];
    

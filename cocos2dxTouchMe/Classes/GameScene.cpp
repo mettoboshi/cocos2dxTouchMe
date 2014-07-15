@@ -107,8 +107,8 @@ bool GameScene::init()
     baseTimer = 0.5f;
     timer = 0.5f;
   } else if(appData->level == 2) {
-    baseTimer = 0.5f;
-    timer = 0.3f;
+    baseTimer = 0.2f;
+    timer = 0.2f;
   }
 
   gameTime = 0;
@@ -137,7 +137,7 @@ void GameScene::gameEndTimer(float time)
   gameTime++;
   progressTimer->setPercentage(100.0f - (gameTime * 10));
   
-  if (gameTime >= 10){
+  if (gameTime > 10){
     this->pauseSchedulerAndActions();
 
     AppData* appData = AppData::getInstance();
